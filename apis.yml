@@ -1,0 +1,32 @@
+aid: marketstack
+name: Marketstack
+description: "Real-Time, Intraday & Historical Market Data API"
+url: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+specificationVersion: '0.20'
+created: '2026-05-28'
+modified: '2026-05-28'
+x-source: public-apis/public-apis
+x-category: "Finance"
+x-tier: 3
+x-tier-reason: bulk-registered-from-public-apis
+tags:
+  - Finance
+  - Public APIs
+apis:
+  - name: Marketstack
+    description: "Real-Time, Intraday & Historical Market Data API"
+    humanURL: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+    baseURL: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+    tags:
+      - Finance
+    properties:
+      - type: Documentation
+        url: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+common:
+  - type: Website
+    url: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+  - type: PublicAPIsListing
+    url: https://github.com/public-apis/public-apis
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
