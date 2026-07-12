@@ -23,10 +23,14 @@ apis:
       - type: Documentation
         url: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
 common:
+  - type: DomainSecurity
+    url: security/marketstack-domain-security.yml
   - type: Website
     url: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
   - type: PublicAPIsListing
     url: https://github.com/public-apis/public-apis
+  - url: https://blog.apilayer.com/feed/
+    type: Blog
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
