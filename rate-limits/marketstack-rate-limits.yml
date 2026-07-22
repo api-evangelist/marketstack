@@ -1,0 +1,46 @@
+generated: '2026-07-22'
+method: searched
+source: >-
+  Marketstack documentation rate-limit note (https://marketstack.com/documentation)
+  + https://marketstack.com/pricing (2026-07-22)
+limit_count: 6
+rate_limits:
+  - name: Global request rate
+    limit: 5
+    period: second
+    scope: account
+    signaling: 429 rate_limit_reached
+  - name: Free plan monthly quota
+    limit: 100
+    period: month
+    scope: account
+    plan: Free
+    signaling: 429 too_many_requests
+  - name: Basic plan monthly quota
+    limit: 10000
+    period: month
+    scope: account
+    plan: Basic
+    overage: "$0.003996 per extra request"
+  - name: Professional plan monthly quota
+    limit: 100000
+    period: month
+    scope: account
+    plan: Professional
+    overage: "$0.0019996 per extra request"
+  - name: Business plan monthly quota
+    limit: 500000
+    period: month
+    scope: account
+    plan: Business
+    overage: "$0.00119992 per extra request"
+  - name: Enterprise volume
+    limit: custom
+    period: month
+    scope: account
+    plan: Enterprise
+headers: []
+notes: >-
+  No rate-limit response headers documented; limits surface only as HTTP 429
+  errors (rate_limit_reached for the per-second cap, too_many_requests for the
+  monthly quota).

@@ -1,0 +1,19 @@
+generated: '2026-07-22'
+method: generated
+notes: >-
+  Operation ids referenced are the stable ids assigned by
+  overlays/marketstack-v2-overlay.yaml (the vendor spec ships none); each maps
+  to the METHOD /path noted in the skill.
+skills:
+  - file: marketstack-eod-history.md
+    name: Fetch end-of-day price history for a ticker
+    api: openapi/marketstack-v2-openapi.json
+    operations: [getEod, getTickersSymbolEod, getEodLatest]
+  - file: marketstack-realtime-intraday.md
+    name: Get real-time and intraday prices
+    api: openapi/marketstack-v2-openapi.json
+    operations: [getStockprice, getIntraday, getIntradayLatest]
+  - file: marketstack-discover-tickers.md
+    name: Discover tickers and exchanges
+    api: openapi/marketstack-v2-openapi.json
+    operations: [getTickerslist, getTickerinfo, getExchanges, getExchangesMicTickers]

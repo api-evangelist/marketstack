@@ -1,0 +1,27 @@
+generated: '2026-07-22'
+method: searched
+notes: >-
+  No /.well-known/ discovery surface found. marketstack.com returns 404 for
+  every probed path. api.marketstack.com is a catch-all route that answers
+  every path (including /.well-known/security.txt and /openapi.json) with its
+  standard 401 missing_access_key JSON error envelope, so its 200/401 responses
+  are NOT real well-known documents. Absence recorded as valid probe data;
+  no WellKnown pointer is wired in apis.yml because no document exists.
+hosts:
+  - host: https://marketstack.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+      - path: /.well-known/openid-configuration
+        status: 404
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+      - path: /.well-known/api-catalog
+        status: 404
+      - path: /.well-known/ai-plugin.json
+        status: 404
+  - host: https://api.marketstack.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 401
+        note: catch-all API route returns missing_access_key error envelope, not a security.txt

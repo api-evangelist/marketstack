@@ -1,0 +1,54 @@
+generated: '2026-07-22'
+method: searched
+source: >-
+  Marketstack documentation (https://marketstack.com/documentation archived
+  render + https://docs.apilayer.com/marketstack) + openapi/marketstack-v2-openapi.json
+authentication:
+  style: api-key-in-query
+  parameter: access_key
+  reference: authentication/marketstack-authentication.yml
+idempotency:
+  supported: false
+  notes: >-
+    All 45 operations are HTTP GET (naturally safe/idempotent reads); there is
+    no write surface and no Idempotency-Key contract.
+pagination:
+  style: offset
+  params:
+    limit: "results per page; default 100, maximum 1000"
+    offset: "zero-based result offset; default 0"
+  response_fields:
+    pagination.limit: applied limit
+    pagination.offset: applied offset
+    pagination.count: results in this page
+    pagination.total: total results available
+  notes: uniform across list endpoints; modeled as the Pagination schema in the OpenAPI
+response_envelope:
+  success: '{"pagination": {...}, "data": [...]}'
+  error: '{"error": {"code": "...", "message": "...", "context": {...}}}'
+  reference: errors/marketstack-problem-types.yml
+filtering:
+  symbols: comma-separated ticker symbols (up to 100 per request)
+  date_from_date_to: YYYY-MM-DD range filters on time-series endpoints
+  date_paths: /eod/{date} and /intraday/{date} accept YYYY-MM-DD or ISO-8601 datetimes
+  sort: sort parameter on time-series endpoints (DESC default)
+  exchange: filter by ISO 10383 MIC on ticker/eod/intraday endpoints
+field_expansion:
+  supported: false
+metadata:
+  supported: false
+request_tracing:
+  request_id_header: null
+  notes: no documented request-id header
+versioning:
+  scheme: uri-path
+  current: v2
+  reference: lifecycle/marketstack-lifecycle.yml
+rate_limits:
+  per_second: 5
+  per_month: plan quota (100 free through 500,000 business, overage-billed on paid tiers)
+  signaling: HTTP 429 with error codes rate_limit_reached / too_many_requests; no documented rate-limit headers
+  reference: rate-limits/marketstack-rate-limits.yml
+transport:
+  https: supported on all current plans (per 2026 pricing page); API also answers plain HTTP
+  formats: [JSON]

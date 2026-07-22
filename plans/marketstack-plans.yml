@@ -1,0 +1,41 @@
+generated: '2026-07-22'
+method: searched
+source: https://marketstack.com/pricing
+plan_count: 5
+currency: USD
+plans:
+  - name: Free
+    price_monthly: 0
+    requests_per_month: 100
+    features: [End-of-Day Data, 1 Year History, Splits & Dividends, Stock Tickers Info, 2700+ Stock Exchanges Info, Currencies & Timezones, HTTPS Encryption]
+    support: none
+  - name: Basic
+    price_monthly: 9.99
+    price_monthly_billed_yearly: 8.99
+    requests_per_month: 10000
+    overage_per_request: 0.003996
+    features: [End-of-Day Data, 10 Years History, Splits & Dividends, Stock Tickers Info, 2700+ Stock Exchanges Info, Currencies & Timezones, HTTPS Encryption, IEX Intraday Data (US), Stock Market Index, Bonds, ETF Holding, Commercial Use]
+    support: standard
+  - name: Professional
+    price_monthly: 49.99
+    price_monthly_billed_yearly: 43.99
+    requests_per_month: 100000
+    overage_per_request: 0.0019996
+    features: [Everything in Basic, 15+ Years History, Real-Time Updates, Real-time Stock Market Prices, Commodity Prices, Commodities History Prices]
+    support: standard
+  - name: Business
+    price_monthly: 149.99
+    price_monthly_billed_yearly: 127.99
+    requests_per_month: 500000
+    overage_per_request: 0.00119992
+    features: [Everything in Professional, Company Ratings, Company Statements, Company Details, Company Concepts, Company Facts]
+    support: standard
+  - name: Enterprise
+    price_monthly: custom
+    requests_per_month: custom
+    features: [Volume Requests, Custom Solutions, Everything in Business]
+    support: platinum
+notes: >-
+  Self-service signup with a free-forever tier; paid tiers bill overage per
+  extra request. Feature gating maps to 403 function_access_restricted errors
+  on endpoints outside the subscribed plan.

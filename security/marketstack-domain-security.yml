@@ -1,4 +1,4 @@
-generated: '2026-07-11'
+generated: '2026-07-22'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
@@ -7,6 +7,11 @@ hosts:
   tls_version: TLSv1.3
   cert_expires: Aug 27 22:59:05 2026 GMT
   hsts: false
+- host: api.marketstack.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 27 22:59:05 2026 GMT
+  hsts: null
 domains:
 - domain: marketstack.com
   dnssec: false

@@ -1,36 +1,128 @@
 aid: marketstack
+accessModel:
+  pricing: freemium
+  onboarding: self-service
+  trial: true
+  try_now: false
+  public: true
+  label: Freemium
+  confidence: high
+  source:
+    - https://marketstack.com/pricing
+    - https://marketstack.com/signup/free
+  generated: '2026-07-22'
+  method: searched
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/marketstack.png
 name: Marketstack
-description: "Real-Time, Intraday & Historical Market Data API"
-url: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+description: >-
+  Marketstack is a real-time, intraday, and historical stock market data API
+  from APILayer, delivering JSON data for tickers across 70+ global stock
+  exchanges. The REST API covers end-of-day and intraday prices, real-time
+  stock prices, splits, dividends, commodities, company ratings, market
+  indexes, bonds, ETF holdings, currencies, timezones, and SEC EDGAR company
+  filings and facts, all authenticated with a simple access_key query
+  parameter.
+url: https://marketstack.com
 specificationVersion: '0.20'
 created: '2026-05-28'
-modified: '2026-05-28'
+modified: '2026-07-22'
 x-source: public-apis/public-apis
 x-category: "Finance"
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
 tags:
   - Finance
-  - Public APIs
+  - Stock Market
+  - Market Data
+  - End-of-Day Data
+  - Intraday Data
+  - Commodities
+  - Bonds
+  - ETFs
+  - SEC EDGAR
+  - Dividends
 apis:
-  - name: Marketstack
-    description: "Real-Time, Intraday & Historical Market Data API"
-    humanURL: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
-    baseURL: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+  - name: Marketstack API v2
+    description: >-
+      Real-time, intraday and historical market data API with 45 endpoints
+      spanning end-of-day bars, intraday bars, real-time stock prices,
+      commodities, company ratings, splits, dividends, tickers, indexes,
+      exchanges, currencies, timezones, bonds, ETF holdings, and SEC EDGAR
+      filings data.
+    humanURL: https://marketstack.com
+    baseURL: https://api.marketstack.com/v2
     tags:
       - Finance
+      - Stock Market
+      - Market Data
     properties:
+      - type: OpenAPI
+        url: openapi/marketstack-v2-openapi.json
       - type: Documentation
-        url: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+        url: https://docs.apilayer.com/marketstack/docs/api-documentation
+      - type: APIReference
+        url: https://marketstack.com/documentation_v2
+      - type: ToolCrosswalk
+        url: mcp/marketstack-tool-crosswalk.yml
 common:
-  - type: DomainSecurity
-    url: security/marketstack-domain-security.yml
   - type: Website
-    url: https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers
+    url: https://marketstack.com
+  - type: DeveloperPortal
+    url: https://docs.apilayer.com/marketstack
+  - type: Documentation
+    url: https://docs.apilayer.com/marketstack/docs/api-documentation
+  - type: APIReference
+    url: https://marketstack.com/documentation_v2
+  - type: GettingStarted
+    url: https://marketstack.com/quickstart
+  - type: Support
+    url: https://marketstack.com/contact
+  - type: Pricing
+    url: https://marketstack.com/pricing
+  - type: SignUp
+    url: https://marketstack.com/signup/free
+  - type: Login
+    url: https://marketstack.com/login
+  - type: TermsOfService
+    url: https://marketstack.com/terms
+  - type: PrivacyPolicy
+    url: https://marketstack.com/privacy
+  - type: StatusPage
+    url: https://status.marketstack.com
+  - type: Postman
+    url: https://www.postman.com/apilayer
+  - type: Blog
+    url: https://blog.apilayer.com/feed/
   - type: PublicAPIsListing
     url: https://github.com/public-apis/public-apis
-  - url: https://blog.apilayer.com/feed/
-    type: Blog
+  - type: DomainSecurity
+    url: security/marketstack-domain-security.yml
+  - type: Packages
+    url: packages/marketstack-packages.yml
+  - type: MCPServer
+    url: mcp/marketstack-mcp.yml
+  - type: LLMsTxt
+    url: llms/marketstack-llms.txt
+  - type: Overlay
+    url: overlays/marketstack-v2-overlay.yaml
+  - type: Conformance
+    url: conformance/marketstack-conformance.yml
+  - type: ErrorCatalog
+    url: errors/marketstack-problem-types.yml
+  - type: Lifecycle
+    url: lifecycle/marketstack-lifecycle.yml
+  - type: Authentication
+    url: authentication/marketstack-authentication.yml
+  - type: Conventions
+    url: conventions/marketstack-conventions.yml
+  - type: DataModel
+    url: data-model/marketstack-data-model.yml
+  - type: RateLimits
+    url: rate-limits/marketstack-rate-limits.yml
+  - type: Plans
+    url: plans/marketstack-plans.yml
+  - type: AgentSkill
+    url: skills/_index.yml
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com

@@ -1,0 +1,73 @@
+generated: '2026-07-22'
+method: searched
+format: vendor-envelope
+source: >-
+  Marketstack API documentation error reference
+  (https://marketstack.com/documentation, archived render) + live unauthenticated
+  probes of https://api.marketstack.com/v2 on 2026-07-22
+envelope: >-
+  Errors return an HTTP status code and a JSON body {"error": {"code":
+  "<string>", "message": "<string>"}}. Validation errors add a "context"
+  object with one sub-object per affected parameter carrying key and message
+  fields. Successful requests return HTTP 200. (Note: the legacy v1 error
+  envelope used numeric codes plus a "type" field, e.g. {"code": 101, "type":
+  "missing_access_key"}; v2 returns the string code directly - both shapes
+  were observed live on 2026-07-22.)
+problems:
+  - status: 401
+    code: missing_access_key
+    title: No API access key supplied
+    detail: "You have not supplied an API Access Key. [Required format: access_key=YOUR_ACCESS_KEY]"
+    evidence: live probe GET /v2/eod without access_key (2026-07-22)
+  - status: 401
+    code: invalid_access_key
+    title: Invalid API access key
+    detail: You have not supplied a valid API Access Key.
+    evidence: live probe GET /v2/eod?access_key=invalid_test (2026-07-22)
+  - status: 401
+    code: unauthorized
+    title: Unauthorized
+    detail: Check your access key or activity of the account.
+    evidence: docs error table
+  - status: 403
+    code: https_access_restricted
+    title: HTTPS access restricted
+    detail: HTTPS access is not supported on the current subscription plan.
+    evidence: docs error table
+  - status: 403
+    code: function_access_restricted
+    title: Endpoint not on current plan
+    detail: The given API endpoint is not supported on the current subscription plan.
+    evidence: docs error table
+  - status: 404
+    code: invalid_api_function
+    title: Endpoint does not exist
+    detail: The given API endpoint does not exist.
+    evidence: docs error table
+  - status: 404
+    code: 404_not_found
+    title: Resource not found
+    detail: Resource not found.
+    evidence: docs error table
+  - status: 422
+    code: validation_error
+    title: Request validation failed
+    detail: >-
+      Example from docs: "You have to specify at least one symbol and not more
+      than 100". A context object identifies the offending parameter(s).
+    evidence: docs example error
+  - status: 429
+    code: too_many_requests
+    title: Monthly request volume reached
+    detail: The given user account has reached its monthly allowed request volume.
+    evidence: docs error table
+  - status: 429
+    code: rate_limit_reached
+    title: Rate limit reached
+    detail: The given user account has reached the rate limit (5 requests per second).
+    evidence: docs error table + rate-limit note
+  - status: 500
+    code: internal_error
+    title: Internal error
+    detail: An internal error occurred.
+    evidence: docs error table

@@ -1,0 +1,45 @@
+generated: '2026-07-22'
+method: derived
+source: openapi/marketstack-v2-openapi.json + docs + live probes (2026-07-22)
+standards:
+  - id: oauth2
+    conforms: false
+    evidence: single apiKey-in-query securityScheme (access_key); no OAuth flows
+  - id: oidc
+    conforms: false
+    evidence: no openIdConnect scheme; /.well-known/openid-configuration 404
+  - id: openapi-3.0
+    conforms: true
+    evidence: provider publishes OpenAPI 3.0.3 on SwaggerHub (apilayer-863/MarketstackAPIv2)
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      errors use a vendor envelope {"error": {"code", "message"}} with
+      application/json, not application/problem+json
+  - id: json-api
+    conforms: false
+    evidence: plain JSON envelope {"pagination", "data"} - not JSON:API media type
+  - id: pagination
+    conforms: true
+    evidence: >-
+      uniform offset pagination (limit default 100 / max 1000, offset) with a
+      pagination response object {limit, offset, count, total} (Pagination
+      schema in the OpenAPI)
+  - id: idempotency
+    conforms: false
+    evidence: read-only GET API; no Idempotency-Key contract documented
+  - id: rfc8594-sunset
+    conforms: false
+    evidence: no Sunset/Deprecation header support found
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt 404 on marketstack.com
+  - id: tls-1-3
+    conforms: true
+    evidence: TLSv1.3 probed on marketstack.com and api.marketstack.com (security/marketstack-domain-security.yml)
+  - id: iso-10383-mic
+    conforms: true
+    evidence: exchanges addressed by ISO 10383 Market Identifier Codes (/exchanges/{mic})
+  - id: sec-edgar
+    conforms: true
+    evidence: EDGAR endpoints expose SEC CIK codes, submissions, company facts and US-GAAP concepts/frames

@@ -1,0 +1,104 @@
+generated: '2026-07-22'
+method: derived
+source: openapi/marketstack-v2-openapi.json
+notes: >-
+  Entity graph derived from the v2 OpenAPI component schemas and their
+  reference fields. Identifiers: tickers use exchange ticker symbols (e.g.
+  AAPL), exchanges use ISO 10383 MICs (e.g. XNAS), EDGAR entities use SEC CIK
+  codes. Time-series bars reference their ticker via symbol and exchange via
+  MIC on every row.
+entities:
+  - name: Ticker
+    schema: Ticker
+    id_field: symbol
+    domains: [reference-data]
+  - name: Exchange
+    schema: Exchange
+    id_field: mic
+    id_format: ISO 10383 MIC
+    domains: [reference-data]
+  - name: EODBar
+    schema: EODBar
+    domains: [time-series]
+  - name: IntradayBar
+    schema: IntradayBar
+    domains: [time-series]
+  - name: StockPrice
+    schema: StockPriceItem
+    domains: [real-time]
+  - name: Split
+    schema: SplitItem
+    domains: [corporate-actions]
+  - name: Dividend
+    schema: DividendItem
+    domains: [corporate-actions]
+  - name: Index
+    schema: IndexListItem
+    domains: [reference-data]
+  - name: Bond
+    schema: BondListItem
+    domains: [fixed-income]
+  - name: ETF
+    schema: ETFListItem
+    domains: [funds]
+  - name: ETFHoldingSecurity
+    schema: ETFHoldingSecurity
+    domains: [funds]
+  - name: Currency
+    schema: Currency
+    domains: [reference-data]
+  - name: Timezone
+    schema: Timezone
+    domains: [reference-data]
+  - name: Commodity
+    schema: CommodityResponse
+    domains: [commodities]
+  - name: EDGARCompany
+    id_field: cik
+    id_format: SEC CIK code
+    domains: [edgar]
+relationships:
+  - from: Ticker
+    to: Exchange
+    kind: belongs_to
+    via: stock_exchange (TickerExchange, keyed by mic)
+  - from: Exchange
+    to: Ticker
+    kind: has_many
+    via: /exchanges/{mic}/tickers
+  - from: EODBar
+    to: Ticker
+    kind: belongs_to
+    via: symbol
+  - from: EODBar
+    to: Exchange
+    kind: belongs_to
+    via: exchange (MIC)
+  - from: IntradayBar
+    to: Ticker
+    kind: belongs_to
+    via: symbol
+  - from: Ticker
+    to: Split
+    kind: has_many
+    via: /tickers/{symbol}/splits
+  - from: Ticker
+    to: Dividend
+    kind: has_many
+    via: /tickers/{symbol}/dividends
+  - from: Ticker
+    to: EODBar
+    kind: has_many
+    via: /tickers/{symbol}/eod
+  - from: Ticker
+    to: IntradayBar
+    kind: has_many
+    via: /tickers/{symbol}/intraday
+  - from: Exchange
+    to: Timezone
+    kind: belongs_to
+    via: timezone
+  - from: EDGARCompany
+    to: Ticker
+    kind: has_one
+    via: company name / CIK lookup (/cik_code, /company_name)

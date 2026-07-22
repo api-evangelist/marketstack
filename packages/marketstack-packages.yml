@@ -1,0 +1,51 @@
+generated: '2026-07-22'
+method: searched
+source: npm/PyPI registry searches for marketstack client libraries
+notes: >-
+  Marketstack ships no first-party SDKs - the provider documents direct HTTP
+  access (plus a public Postman collection). The packages below are
+  community-maintained client libraries verified live in the registries on
+  2026-07-22. None is published by APILayer, so official is false throughout.
+packages:
+  - language: javascript
+    registry: npm
+    name: marketstack
+    url: https://www.npmjs.com/package/marketstack
+    install: npm install marketstack
+    official: false
+    description: JS wrapper for Marketstack API (community, jvalente)
+  - language: javascript
+    registry: npm
+    name: "@pipedream/marketstack"
+    url: https://www.npmjs.com/package/@pipedream/marketstack
+    install: npm install @pipedream/marketstack
+    official: false
+    description: Pipedream Marketstack integration components
+  - language: javascript
+    registry: npm
+    name: "@shussey/marketstack"
+    url: https://www.npmjs.com/package/@shussey/marketstack
+    install: npm install @shussey/marketstack
+    official: false
+    description: Community MCP server for the Marketstack API (see mcp/)
+  - language: javascript
+    registry: npm
+    name: node-stock-data
+    url: https://www.npmjs.com/package/node-stock-data
+    install: npm install node-stock-data
+    official: false
+    description: Node.js stock tracking library built on Marketstack
+  - language: python
+    registry: pypi
+    name: marketstack
+    url: https://pypi.org/project/marketstack/
+    install: pip install marketstack
+    official: false
+    description: Unofficial Marketstack OpenAPI Python client (mreiche/marketstack-python)
+  - language: python
+    registry: pypi
+    name: pymarketstack
+    url: https://pypi.org/project/pymarketstack/
+    install: pip install pymarketstack
+    official: false
+    description: Python library for the Marketstack API (NoakPalander/pymarketstack)

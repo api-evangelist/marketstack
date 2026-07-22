@@ -1,0 +1,30 @@
+generated: '2026-07-22'
+method: searched
+source: openapi/marketstack-v2-openapi.json
+docs: https://docs.apilayer.com/marketstack/docs/api-documentation
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - query
+schemes:
+- name: ApiKeyQuery
+  type: apiKey
+  in: query
+  parameter: access_key
+  description: >-
+    Your Marketstack API access key. Every API request is authenticated by
+    passing the account's API access key to the access_key query parameter
+    (format: access_key=YOUR_ACCESS_KEY). Keys are issued on signup and can be
+    reset at any time from the account dashboard; the docs warn never to expose
+    the key publicly. Unauthenticated requests receive HTTP 401 with error
+    codes missing_access_key or invalid_access_key (verified by live probe
+    2026-07-22).
+  sources:
+  - openapi/marketstack-v2-openapi.json
+  - https://docs.apilayer.com/marketstack/docs/api-documentation
+notes: >-
+  No OAuth, no scopes - a single account-level API key governs access; plan
+  tier (Free through Enterprise) determines which endpoints and features the
+  key can reach (higher-tier endpoints return 403 function_access_restricted).
+  HTTPS is supported on all current plans per the 2026 pricing page.

@@ -1,0 +1,53 @@
+generated: '2026-07-22'
+method: derived
+source: mcp/marketstack-mcp.yml + openapi/marketstack-v2-openapi.json
+notes: >-
+  The vendor OpenAPI ships no operationIds; operations are referenced here by
+  METHOD /path plus the stable operationId assigned in
+  overlays/marketstack-v2-overlay.yaml. The only published MCP server is
+  community-built (@shussey/marketstack) with a single tool wired to the v1
+  /eod endpoint; the v2 spec's /eod is the same surface (v2 adds fields), so
+  the binding is high-confidence. Everything else in the 45-operation spec is
+  rest_only - a large candidate surface for a fuller MCP server.
+surfaces:
+  openapi: openapi/marketstack-v2-openapi.json
+  graphql: null
+  mcp:
+    package: "@shussey/marketstack"
+    transport: stdio
+    gated: false
+    note: tool list extracted from the published npm package source (not a hosted server)
+crosswalk:
+  - tool: marketstack_eod
+    category: market-data
+    rest: [getEod]
+    rest_path: GET /eod
+    binding: rest
+    confidence: high
+    note: >-
+      Tool calls v1 /eod; v2 GET /eod is the successor of the same endpoint.
+      Real input contract = symbols, date_from, date_to, limit query params.
+mcp_only: []
+rest_only:
+  - category: end-of-day
+    operations: [getEodLatest, getEodDate, getTickersSymbolEod, getTickersSymbolEodDate, getTickersSymbolEodLatest, getExchangesMicEod, getExchangesMicEodLatest, getExchangesMicEodDate]
+  - category: intraday
+    operations: [getIntraday, getIntradayLatest, getIntradayDate, getTickersSymbolIntraday, getTickersSymbolIntradayLatest, getExchangesMicIntraday, getExchangesMicIntradayLatest, getExchangesMicIntradayDate]
+  - category: real-time
+    operations: [getStockprice]
+  - category: commodities
+    operations: [getCommodities, getCommoditieshistory]
+  - category: corporate-actions
+    operations: [getSplits, getDividends, getTickersSymbolSplits, getTickersSymbolDividends, getCompanyratings]
+  - category: reference-data
+    operations: [getTickersSymbol, getTickerslist, getTickerinfo, getIndexlist, getIndexinfo, getExchanges, getExchangesMic, getExchangesMicTickers, getCurrencies, getTimezones]
+  - category: fixed-income-etf
+    operations: [getBondlist, getBond, getEtflist, getEtfholdings]
+  - category: edgar
+    operations: [getCikcode, getCompanyname, getSubmissions, getCompanyfacts, getConceptAccountspayable, getFramesAccountspayableUnit]
+coverage:
+  mcp_tools: 1
+  mcp_tools_bound: 1
+  mcp_only: 0
+  rest_operations_total: 45
+  rest_operations_with_tool: 1

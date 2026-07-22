@@ -1,0 +1,149 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Marketstack API v2
+  version: 1.0.0
+x-generated: '2026-07-22'
+x-method: generated
+extends: openapi/marketstack-v2-openapi.json
+actions:
+  - target: $.info
+    update:
+      x-apievangelist:
+        provider: marketstack
+        review: https://github.com/api-evangelist/marketstack
+        notes: Vendor spec ships no operationIds and no error responses; this overlay adds stable operationIds per operation and the documented error envelope reference.
+  - target: $.paths['/eod'].get
+    update:
+      operationId: getEod
+  - target: $.paths['/eod/latest'].get
+    update:
+      operationId: getEodLatest
+  - target: $.paths['/eod/{date}'].get
+    update:
+      operationId: getEodDate
+  - target: $.paths['/intraday'].get
+    update:
+      operationId: getIntraday
+  - target: $.paths['/intraday/latest'].get
+    update:
+      operationId: getIntradayLatest
+  - target: $.paths['/intraday/{date}'].get
+    update:
+      operationId: getIntradayDate
+  - target: $.paths['/stockprice'].get
+    update:
+      operationId: getStockprice
+  - target: $.paths['/commodities'].get
+    update:
+      operationId: getCommodities
+  - target: $.paths['/commoditieshistory'].get
+    update:
+      operationId: getCommoditieshistory
+  - target: $.paths['/companyratings'].get
+    update:
+      operationId: getCompanyratings
+  - target: $.paths['/splits'].get
+    update:
+      operationId: getSplits
+  - target: $.paths['/dividends'].get
+    update:
+      operationId: getDividends
+  - target: $.paths['/tickers/{symbol}'].get
+    update:
+      operationId: getTickersSymbol
+  - target: $.paths['/tickers/{symbol}/eod'].get
+    update:
+      operationId: getTickersSymbolEod
+  - target: $.paths['/tickers/{symbol}/splits'].get
+    update:
+      operationId: getTickersSymbolSplits
+  - target: $.paths['/tickers/{symbol}/dividends'].get
+    update:
+      operationId: getTickersSymbolDividends
+  - target: $.paths['/tickers/{symbol}/intraday'].get
+    update:
+      operationId: getTickersSymbolIntraday
+  - target: $.paths['/tickers/{symbol}/eod/{date}'].get
+    update:
+      operationId: getTickersSymbolEodDate
+  - target: $.paths['/tickers/{symbol}/eod/latest'].get
+    update:
+      operationId: getTickersSymbolEodLatest
+  - target: $.paths['/tickers/{symbol}/intraday/latest'].get
+    update:
+      operationId: getTickersSymbolIntradayLatest
+  - target: $.paths['/tickerslist'].get
+    update:
+      operationId: getTickerslist
+  - target: $.paths['/tickerinfo'].get
+    update:
+      operationId: getTickerinfo
+  - target: $.paths['/indexlist'].get
+    update:
+      operationId: getIndexlist
+  - target: $.paths['/indexinfo'].get
+    update:
+      operationId: getIndexinfo
+  - target: $.paths['/exchanges'].get
+    update:
+      operationId: getExchanges
+  - target: $.paths['/exchanges/{mic}'].get
+    update:
+      operationId: getExchangesMic
+  - target: $.paths['/exchanges/{mic}/tickers'].get
+    update:
+      operationId: getExchangesMicTickers
+  - target: $.paths['/exchanges/{mic}/eod'].get
+    update:
+      operationId: getExchangesMicEod
+  - target: $.paths['/exchanges/{mic}/eod/latest'].get
+    update:
+      operationId: getExchangesMicEodLatest
+  - target: $.paths['/exchanges/{mic}/eod/{date}'].get
+    update:
+      operationId: getExchangesMicEodDate
+  - target: $.paths['/exchanges/{mic}/intraday'].get
+    update:
+      operationId: getExchangesMicIntraday
+  - target: $.paths['/exchanges/{mic}/intraday/latest'].get
+    update:
+      operationId: getExchangesMicIntradayLatest
+  - target: $.paths['/exchanges/{mic}/intraday/{date}'].get
+    update:
+      operationId: getExchangesMicIntradayDate
+  - target: $.paths['/currencies'].get
+    update:
+      operationId: getCurrencies
+  - target: $.paths['/timezones'].get
+    update:
+      operationId: getTimezones
+  - target: $.paths['/bondlist'].get
+    update:
+      operationId: getBondlist
+  - target: $.paths['/bond'].get
+    update:
+      operationId: getBond
+  - target: $.paths['/etflist'].get
+    update:
+      operationId: getEtflist
+  - target: $.paths['/etfholdings'].get
+    update:
+      operationId: getEtfholdings
+  - target: $.paths['/cik_code'].get
+    update:
+      operationId: getCikcode
+  - target: $.paths['/company_name'].get
+    update:
+      operationId: getCompanyname
+  - target: $.paths['/submissions'].get
+    update:
+      operationId: getSubmissions
+  - target: $.paths['/company_facts'].get
+    update:
+      operationId: getCompanyfacts
+  - target: $.paths['/concept/accounts_payable'].get
+    update:
+      operationId: getConceptAccountspayable
+  - target: $.paths['/frames/accounts_payable/{unit}'].get
+    update:
+      operationId: getFramesAccountspayableUnit

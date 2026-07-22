@@ -1,0 +1,42 @@
+generated: '2026-07-22'
+method: searched
+status: community
+source: https://www.npmjs.com/package/@shussey/marketstack
+official: false
+notes: >-
+  Marketstack/APILayer publishes no first-party MCP server. A community MCP
+  server exists on npm (@shussey/marketstack v0.1.0, MIT-era MCP SDK ^1.0.1);
+  its single tool and inputSchema below were extracted verbatim from the
+  published package's dist/index.js on 2026-07-22. It runs over stdio, calls
+  the v1 /eod endpoint, and requires the MARKETSTACK_API_KEY environment
+  variable. The v2 OpenAPI in this repo (45 operations) is the obvious source
+  for a fuller candidate tool surface - see mcp/marketstack-tool-crosswalk.yml.
+server:
+  name: marketstack (community)
+  package: "@shussey/marketstack"
+  version: 0.1.0
+  transport: stdio
+  install: npx @shussey/marketstack
+  env:
+    - MARKETSTACK_API_KEY
+tools:
+  - name: marketstack_eod
+    description: Get End-of-Day (EOD) stock data
+    backing_endpoint: GET http://api.marketstack.com/v1/eod
+    inputSchema:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Stock symbol (e.g., 'AAPL')
+        date_from:
+          type: string
+          description: Start date (YYYY-MM-DD)
+        date_to:
+          type: string
+          description: End date (YYYY-MM-DD)
+        limit:
+          type: number
+          description: Number of results per page
+          default: 100
+      required: [symbol]

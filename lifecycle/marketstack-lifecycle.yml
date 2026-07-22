@@ -1,0 +1,25 @@
+generated: '2026-07-22'
+method: searched
+source: https://marketstack.com (site nav + docs + status page probe, 2026-07-22)
+versioning:
+  scheme: uri-path
+  current: v2
+  versions: [v1, v2]
+  docs: https://marketstack.com/documentation_v2
+  notes: >-
+    Versioned via the URL path (https://api.marketstack.com/v1, /v2). V2 is
+    current and adds real-time stock prices, commodities, company ratings,
+    indexes, bonds, ETF holdings, and SEC EDGAR endpoints. V1 remains live and
+    documented (site nav still links Documentation V1) - no published v1
+    sunset date found.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  notes: No published deprecation policy or RFC 8594 Sunset-header support found.
+sla:
+  url: null
+  notes: >-
+    No public SLA found; Enterprise plans advertise "Platinum Support" and
+    custom terms via sales.
+status_page: https://status.marketstack.com
+deprecated_operations: []
