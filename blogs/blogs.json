@@ -4,11 +4,17 @@
     {
       "source": "https://blog.apilayer.com/feed/",
       "feed_url": "https://blog.apilayer.com/feed/",
+      "saved": 0,
+      "error": "no_feed_no_posts"
+    },
+    {
+      "source": "https://www.postman.com/apilayer",
+      "feed_url": "https://www.postman.com/apilayer",
       "title": "",
       "saved": 0,
-      "method": "feed"
+      "method": "none"
     }
   ],
-  "fetched": "2026-07-20T13:31:34Z",
+  "fetched": "2026-08-01T15:49:00Z",
   "post_count": 13
 }
