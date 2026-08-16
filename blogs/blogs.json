@@ -5,16 +5,17 @@
       "source": "https://blog.apilayer.com/feed/",
       "feed_url": "https://blog.apilayer.com/feed/",
       "saved": 0,
-      "error": "no_feed_no_posts"
+      "error": "parse_failed"
     },
     {
       "source": "https://www.postman.com/apilayer",
       "feed_url": "https://www.postman.com/apilayer",
       "title": "",
       "saved": 0,
-      "method": "none"
+      "method": "none",
+      "error": "parse_failed"
     }
   ],
-  "fetched": "2026-08-06T14:08:46Z",
+  "fetched": "2026-08-15T12:11:08Z",
   "post_count": 13
 }
