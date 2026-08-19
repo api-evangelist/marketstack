@@ -1,0 +1,2073 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Marketstack API v2",
+    "version": "2.0.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "access_key",
+      "value": "{{access_key}}",
+      "placement": "query"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "End-of-day",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "EOD Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/eod",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "You can use the API's `eod` endpoint in order to obtain end-of-day data for one or multiple stock tickers. A single or multiple comma-separated ticker symbols are passed to the API using the `symbols` parameter.\n\n\n**Note:**\n\n* *The EOD data has access to over 500,000 tickers from more major world-known exchanges. The full list of supported tickers and exchanges can be seen here:* [**Download**](https://marketstack.com/download/v2_eod_tickers_finnworlds_tiingo.xlsx)\n\n* *A daily updated list of al"
+        },
+        {
+          "info": {
+            "name": "EOD Latest Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/eod/latest",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Returns the most recent end-of-day data point for the requested symbols."
+        },
+        {
+          "info": {
+            "name": "EOD Data for a Specific Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/eod/:date",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path",
+                "description": "Specific date for EOD data. Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              }
+            ]
+          },
+          "docs": "Specify a date in `YYYY-MM-DD` format. You can also specify an exact time in ISO-8601 date format. For example, `2020-05-21T00:00:00+0000`. Example, `/eod/2020-01-01`"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Intraday",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Intraday Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/intraday",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Intraday aggregation interval."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              },
+              {
+                "name": "after_hours",
+                "value": "",
+                "type": "query",
+                "description": "If set to true, includes pre and post market data if available. By default is set to false."
+              }
+            ]
+          },
+          "docs": "In additional to daily end-of-day stock prices, the Marketstack API also supports intraday data with data intervals as short as one minute. Intraday prices are available for all US stock tickers included in the IEX (Investors Exchange) stock exchange.\n\nTo access intraday market data, use the API’s Intraday Endpoint and specify your desired stock ticker symbols.\n\n**Notes:**\n\n* *A daily updated list of all tickers accessible via Marketstack is available for download:[**Download Ticker List**](http"
+        },
+        {
+          "info": {
+            "name": "Intraday Latest Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/intraday/latest",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Intraday aggregation interval."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "after_hours",
+                "value": "",
+                "type": "query",
+                "description": "If set to true, includes pre and post market data if available. By default is set to false."
+              }
+            ]
+          },
+          "docs": "Returns the most recent intraday bar for the requested symbols.\n\n**Real-Time Updates:** Please note that data frequency intervals below 15 minutes (15min) are only supported if you are subscribed to the Professional Plan or higher.\n\nUS equity markets close at **4:00 PM EST**, with trades at or after this time considered after-hours (retrievable with `after_hours=true`), though IEX after-hours data may be sparse, and note that intraday closing prices differ from official EOD closes, which are set"
+        },
+        {
+          "info": {
+            "name": "Intraday Data for a Specific Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/intraday/:date",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path",
+                "description": "Specific date for intraday data. Example `2024-09-27 15:30`."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Intraday aggregation interval."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              },
+              {
+                "name": "after_hours",
+                "value": "",
+                "type": "query",
+                "description": "If set to true, includes pre and post market data if available. By default is set to false."
+              }
+            ]
+          },
+          "docs": "Specify a date in `YYYY-MM-DD` format. You can also specify an exact time in ISO-8601 date format. For example, `2020-05-21T00:00:00+0000`. Example, `/intraday/2020-01-01`"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Stock Prices",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Real-time Stock Market Prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/stockprice",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "Ticker for which to retrieve the stock price (e.g., `AAPL`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Optional exchange filter (e.g., `NASDAQ`)."
+              }
+            ]
+          },
+          "docs": "Real-time Stock Market Prices endpoint delivers instant access to live market data for stocks across major exchanges worldwide. Track intraday stock performance on `NYSE`, `NASDAQ`, `LON`, `WSE`, `EPA`, `SHE`, `NSE`, and much more."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Commodities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Commodity Prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/commodities",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "commodity_name",
+                "value": "",
+                "type": "query",
+                "description": "Specify the commodity_name for which you like to receive the Price, aluminum for example."
+              }
+            ]
+          },
+          "docs": "Get commodity prices of 70+ world-known commodities of energy, metals, industrial, agricultural, and livestock areas.\n\n**Note:**\n\n* Rate limit for 1 API call per minute is enforced on this endpoint. See the full list of available commodities in the file presented here:[**Download**](https://marketstack.com/download/marketstack-commodities.xlsx)\n\n* Historical end-of-day data (`eod`) is available for up to 15 years back, while intraday data (`intraday`) always only offers the last 10,000 entries f"
+        },
+        {
+          "info": {
+            "name": "Commodities Historical Prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/commoditieshistory",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "commodity_name",
+                "value": "",
+                "type": "query",
+                "description": "Specify the commodity_name for which you like to receive the Price, aluminum for example."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "frequency",
+                "value": "",
+                "type": "query",
+                "description": "Specify the frequency of the commodity prices. Available options are `daily`, `weekly`, `monthly`, `quarterly`, and `yearly`. Default is `daily`."
+              }
+            ]
+          },
+          "docs": "If you are looking for past commodity prices, you can use the Historical Commodity Prices endpoint, where you can choose specific dates and search by individual commodities. Additionally, the API offers options for daily data from the previous five years or monthly intervals using the `frequency` parameter.\n\n**Note:**\n\n* A rate limit of 1 API call per minute is enforced on this endpoint.\n\n* The recommended historical date range for a single API call is 1 year when requesting daily data. While la"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Company Ratings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Company Ratings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/companyratings",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "rated",
+                "value": "",
+                "type": "query",
+                "description": "Filter response on buy, sell, or hold."
+              }
+            ]
+          },
+          "docs": "The Company Rating Endpoint delivers real-time buy/sell/hold analyst ratings, updated as new reports are published. It also provides 15+ years of historical ratings and price targets to track trends and analyst performance over time.\n\n\n**Note:** Rate limit is enforced to 1 API call per minute."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Splits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Splits Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/splits",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Using the Splits Data endpoint, you will be able to look up information about the stock splits factor for different symbols.\n\n\n**Note:** The V2 Splits Endpoint provides split data for symbols listed on **NASDAQ, PINK, SHG, NYSE, NYSE ARCA, OTCQB,** and **BATS**. You can also retrieve split information for individual ticker symbols using the Tickers Endpoint."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Dividends",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Dividends Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/dividends",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Using the Dividends Data endpoint, you will be able to look up information about the stock dividend for different symbols.\n\n**Note:** The **V2 Dividend Endpoint** provides dividend data for symbols listed on **NASDAQ, PINK, SHG, NYSE, NYSE ARCA, OTCQB,** and **BATS**, and dividend information for individual ticker symbols can also be retrieved using the **Tickers Endpoint**."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Tickers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Ticker Information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickers/:symbol",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "Ticker symbol to look up (e.g., `AAPL`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Using the API's Tickers endpoint you will be able to look up information about one or multiple stock ticker symbols as well as obtain end-of-day, real-time and intraday market data for single tickers."
+        },
+        {
+          "info": {
+            "name": "EOD Data for a Specific Ticker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickers/:symbol/eod",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "Ticker symbol to look up (e.g., `AAPL`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Obtain end-of-day data for a specific stock ticker by attaching `/eod` to your URL."
+        },
+        {
+          "info": {
+            "name": "Splits Factor for a Specific Ticker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickers/:symbol/splits",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "Ticker symbol to look up (e.g., `AAPL`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              }
+            ]
+          },
+          "docs": "Obtain ticker splits factor for a specific stock ticker by attaching `/splits` to your URL."
+        },
+        {
+          "info": {
+            "name": "Dividends Data for a Specific Ticker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickers/:symbol/dividends",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "Ticker symbol to look up (e.g., `AAPL`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              }
+            ]
+          },
+          "docs": "Obtain ticker dividend data for a specific stock ticker by attaching `/dividends` to your URL."
+        },
+        {
+          "info": {
+            "name": "Intraday Data for a Specific Ticker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickers/:symbol/intraday",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "Ticker symbol to look up (e.g., `AAPL`)."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Intraday aggregation interval."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              },
+              {
+                "name": "after_hours",
+                "value": "",
+                "type": "query",
+                "description": "If set to true, includes pre and post market data if available. By default is set to false."
+              }
+            ]
+          },
+          "docs": "Obtain real-time & intraday data for a specific stock ticker by attaching `/intraday` to your URL"
+        },
+        {
+          "info": {
+            "name": "EOD Data for a Specific Ticker on a Specific Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickers/:symbol/eod/:date",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "Ticker symbol to look up (e.g., `AAPL`)."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path",
+                "description": "date to look at (e.g., `2020-01-01`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Specify a date in `YYYY-MM-DD` format. You can also specify an exact time in ISO-8601 date format. For example, `2020-05-21T00:00:00+0000`. Example, `/eod/2020-01-01`."
+        },
+        {
+          "info": {
+            "name": "EOD Data for the Latest Date Available for a Specific Ticker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickers/:symbol/eod/latest",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "Ticker symbol to look up (e.g., `AAPL`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Obtain eod data for the latest date by specifying stock ticker by attaching `/eod/latest` to your URL."
+        },
+        {
+          "info": {
+            "name": "Intraday Data for the Latest Date Available for a Specific Ticker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickers/:symbol/intraday/latest",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "Ticker symbol to look up (e.g., `AAPL`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Obtain intraday data for the latest date by specifying stock ticker by attaching `/intraday/latest` to your URL."
+        },
+        {
+          "info": {
+            "name": "Tickers List",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickerslist",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter tickers by name or symbol."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Using the `tickerslist` endpoint you will be able to get the full list of supported tickers."
+        },
+        {
+          "info": {
+            "name": "Tickers Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/tickerinfo",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              }
+            ]
+          },
+          "docs": "Using the `tickerinfo` endpoint you will be able to get the full information about a ticker."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Indexes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Stock Market Index Listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/indexlist",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "The Stock Market Index Listing endpoint delivers instantly real-time and historical stock market index data. Also, returns the full list of supported benchmarks/indexes."
+        },
+        {
+          "info": {
+            "name": "Stock Market Index Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/indexinfo",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "index",
+                "value": "",
+                "type": "query",
+                "description": "Benchmark/index identifier (e.g., `australia_all_ordinaries`)."
+              }
+            ]
+          },
+          "docs": "The Stock Market Index Info endpoint delivers stock market index information and returns the details for the requested index."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Exchanges",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Exchanges",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              },
+              {
+                "name": "search",
+                "value": "",
+                "type": "query",
+                "description": "Search term to filter tickers by name or symbol."
+              }
+            ]
+          },
+          "docs": "Using the Exchanges endpoint you will be able to look up information any of the 2700+ stock exchanges supported by this endpoint. This endpoint provides general information about several stock exchanges. Not all stock exchanges found here are supported by other Marketstack endpoints. For the supported stock exchanges supported by each endpoint, please verify each endpoint documentation."
+        },
+        {
+          "info": {
+            "name": "Specific Stock Exchange Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges/:mic",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "mic",
+                "value": "",
+                "type": "path",
+                "description": "Exchange MIC identifier (e.g., `XNAS`)."
+              }
+            ]
+          },
+          "docs": "Returns detailed information for a single exchange (by MIC)."
+        },
+        {
+          "info": {
+            "name": "Specific Stock Exchange Tickers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges/:mic/tickers",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "mic",
+                "value": "",
+                "type": "path",
+                "description": "Exchange MIC identifier (e.g., `XNAS`)."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Returns tickers listed on a specific exchange."
+        },
+        {
+          "info": {
+            "name": "EOD Data for a Specific Stock Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges/:mic/eod",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "mic",
+                "value": "",
+                "type": "path",
+                "description": "Exchange MIC identifier (e.g., `XNAS`)."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "exchange",
+                "value": "",
+                "type": "query",
+                "description": "Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Returns EOD data for all symbols on a specific exchange."
+        },
+        {
+          "info": {
+            "name": "EOD Data for the Latest Date Available for a Specific Stock Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges/:mic/eod/latest",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "mic",
+                "value": "",
+                "type": "path",
+                "description": "Exchange MIC identifier (e.g., `XNAS`)."
+              }
+            ]
+          },
+          "docs": "Returns EOD data for the latest date avialbale for all symbols on a specific exchange."
+        },
+        {
+          "info": {
+            "name": "EOD Data for a Specific Stock Exchange on a Specific Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges/:mic/eod/:date",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "mic",
+                "value": "",
+                "type": "path",
+                "description": "Exchange MIC identifier (e.g., `XNAS`)."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path",
+                "description": "Specific date for EOD data. Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Returns EOD data for the given date for all symbols on a specific exchange."
+        },
+        {
+          "info": {
+            "name": "Intraday Data for a Specific Stock Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges/:mic/intraday",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "mic",
+                "value": "",
+                "type": "path",
+                "description": "Exchange MIC identifier (e.g., `XNAS`)."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Intraday aggregation interval."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Sort order. Use `ASC` for oldest first or `DESC` for newest first."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Returns intraday data for all symbols on a specific exchange."
+        },
+        {
+          "info": {
+            "name": "Intraday Data for the Latest Date Available for a Specific Stock Exchange",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges/:mic/intraday/latest",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "mic",
+                "value": "",
+                "type": "path",
+                "description": "Exchange MIC identifier (e.g., `XNAS`)."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Intraday aggregation interval."
+              }
+            ]
+          },
+          "docs": "Returns intraday data for the latest date avialbale for all symbols on a specific exchange."
+        },
+        {
+          "info": {
+            "name": "Intraday Data for a Specific Stock Exchange on a Specific Date",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/exchanges/:mic/intraday/:date",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "symbols",
+                "value": "",
+                "type": "query",
+                "description": "One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`)."
+              },
+              {
+                "name": "mic",
+                "value": "",
+                "type": "path",
+                "description": "Exchange MIC identifier (e.g., `XNAS`)."
+              },
+              {
+                "name": "date",
+                "value": "",
+                "type": "path",
+                "description": "Specific date for intraday data. Example `2024-09-27 15:30`."
+              },
+              {
+                "name": "interval",
+                "value": "",
+                "type": "query",
+                "description": "Intraday aggregation interval."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Returns intraday data for the given date for all symbols on a specific exchange."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Currencies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Currencies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/currencies",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of supported currencies by Marketstack API."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Timezones",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Timezones",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/timezones",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of supported timezones by Marketstack API."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Bonds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Bonds Listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/bondlist",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "The Bonds Listing endpoint delivers the list of the supported countries data. Return the full list of supported countries."
+        },
+        {
+          "info": {
+            "name": "Bond Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/bond",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "country",
+                "value": "",
+                "type": "query",
+                "description": "Country name for bonds endpoint (e.g., `kenya`, `united%20states`)."
+              }
+            ]
+          },
+          "docs": "The Bond endpoint delivers immediately real-time government bond data. The bond data focuses on treasury notes issued in leading countries worldwide for ten years. The Bond API delivers info for every country. Endpoint returns the details for the desired country."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ETFs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "ETF Holdings Listing",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/etflist",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "list",
+                "value": "",
+                "type": "query",
+                "description": "ETF list type; currently `ticker`."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "The ETF Holdings Listing endpoint delivers instantly complete set of exchange-traded funds data based on the unique identifier code of an ETF data. The endpoint returns a full list of supported ETF tickers.\n\n\nThe example API request below demonstrates how to retrieve **ETF holdings data.**\n\n**Note:** The ETF API endpoints apply a **call count multiplier of 20.**"
+        },
+        {
+          "info": {
+            "name": "ETF Holdings Info",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/etfholdings",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "ticker",
+                "value": "",
+                "type": "query",
+                "description": "ETF ticker symbol."
+              },
+              {
+                "name": "date_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter results from this date (inclusive). Format `YYYY-MM-DD`."
+              },
+              {
+                "name": "date_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter results up to this date (inclusive). Format `YYYY-MM-DD`."
+              }
+            ]
+          },
+          "docs": "ETF Holding Info (timeframe) holding data within a specified date range using a unique ticker identifier. You can adjust the `ticker`, `date_from`, and `date_to` parameters based on your specific needs.\n\nThe example API request below demonstrates how to retrieve **stock market index information.**\n\n**Note:**The ETF API endpoints use a **call count multiplier of 20.**"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EDGAR",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Find CIK Code by Company Name",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/cik_code",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "company_name",
+                "value": "",
+                "type": "query",
+                "description": "Company name (min 3 letters) used to search CIK codes."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Pagination limit (results per page). Default 100, maximum 1000."
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of results to skip). Default 0."
+              }
+            ]
+          },
+          "docs": "Endpoint provides CIK code information with a search by company name or part of the company name. For example, if you search for “APP” in the response, the endpoint will provide information on the CIK code for all of the companies that we have in the database that have “APP” (“app”) in their name. If you enter “Example LLC”, then the API will give a response with all companies having “Example LLC” in the name, Example LLC Florida, Example LLC., Example LLC International, etc."
+        },
+        {
+          "info": {
+            "name": "Find Company Name by CIK Code",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/company_name",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "cik_code",
+                "value": "",
+                "type": "query",
+                "description": "10-digit SEC Central Index Key (with leading zeros)."
+              }
+            ]
+          },
+          "docs": "Find Company Name by CIK code, which will provide a company name with a search by the CIK Code. The CIK code must be entered with all 10 digits, including leading zeros if any. Since the CIK code is a unique code for every company, we also have CIK code validation, meaning if the CIK code is not entered in the correct format with all of the digits, we return an error for invalid CIK format. This API endpoint returns data only in case we have an exact match in the CIK code."
+        },
+        {
+          "info": {
+            "name": "Company Submission Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/submissions",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "cik_code",
+                "value": "",
+                "type": "query",
+                "description": "The exact 10-digit CIK code including leading zeros (e.g., `0001509697`)."
+              },
+              {
+                "name": "cik_code_name",
+                "value": "",
+                "type": "query",
+                "description": "The exact 10-digit CIK code including leading zeros ending with -submissions.json (e.g., `CIK0001509697-submissions.json`)."
+              },
+              {
+                "name": "report_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter filings by report date from this date (YYYY-MM-DD)."
+              },
+              {
+                "name": "report_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter filings by report date to this date (YYYY-MM-DD)."
+              },
+              {
+                "name": "filing_from",
+                "value": "",
+                "type": "query",
+                "description": "Filter filings by filing date from this date (YYYY-MM-DD)."
+              },
+              {
+                "name": "filing_to",
+                "value": "",
+                "type": "query",
+                "description": "Filter filings by filing date to this date (YYYY-MM-DD)."
+              },
+              {
+                "name": "accession_number",
+                "value": "",
+                "type": "query",
+                "description": "Filter filings by exact accession number (e.g., `0001193125-20-209580`)."
+              }
+            ]
+          },
+          "docs": "Returns submission details for a specific CIK. Pass atleast one parameter `cik_code_name` or  `cik_code`"
+        },
+        {
+          "info": {
+            "name": "Company Facts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/company_facts",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "cik_code",
+                "value": "",
+                "type": "query",
+                "description": "10-digit SEC Central Index Key (with leading zeros)."
+              }
+            ]
+          },
+          "docs": "Returns all the company concepts data for a specific CIK."
+        },
+        {
+          "info": {
+            "name": "Company Concepts for US GAAP Accounts Payable",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/concept/accounts_payable",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "cik_code",
+                "value": "",
+                "type": "query",
+                "description": "10-digit SEC Central Index Key (with leading zeros)."
+              }
+            ]
+          },
+          "docs": "This API endpoint returns all the disclosures from a single company (CIK) and concept (a taxonomy and tag) into a single JSON file, with a separate array of facts for each units on measure that the company has chosen to disclose (e.g. net profits reported in U.S. dollars and in Canadian dollars)."
+        },
+        {
+          "info": {
+            "name": "Company Concepts for US GAAP Accounts Payable in a Specific Unit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.marketstack.com/v2/frames/accounts_payable/:unit",
+            "params": [
+              {
+                "name": "access_key",
+                "value": "",
+                "type": "query",
+                "description": "Your Marketstack API access key."
+              },
+              {
+                "name": "frame",
+                "value": "",
+                "type": "query",
+                "description": "This is the information of the frame for which we want to receive information."
+              },
+              {
+                "name": "unit",
+                "value": "",
+                "type": "path",
+                "description": "The unit in which the data is requested. This parameter usually is USD. Validate and sanitize parameter inputs to ensure API security and expected input values."
+              }
+            ]
+          },
+          "docs": "The frames API aggregates one fact for each reporting entity that is the last filed that most closely fits the calendrical period requested. This API supports annual, quarterly, and instantaneous data. This API endpoint is made for the US-GAAP taxonomy and the Accounts Payable Current type of the taxonomy.           \nWhere the units of measure specified in the API contain a numerator and a denominator, these are separated by “-per-” such as “USD-per-shares”. Note that the default unit in XBRL is"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
