@@ -1,0 +1,691 @@
+openapi: 3.2.0
+info:
+  title: Marketstack API v2 EDGAR API
+  version: 2.0.0
+  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
+
+
+    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
+
+    '
+servers:
+- url: https://api.marketstack.com/v2
+security:
+- ApiKeyQuery: []
+tags:
+- name: EDGAR
+paths:
+  /cik_code:
+    get:
+      tags:
+      - EDGAR
+      summary: Find CIK Code by Company Name
+      description: Endpoint provides CIK code information with a search by company name or part of the company name. For example, if you search for “APP” in the response, the endpoint will provide information on the CIK code for all of the companies that we have in the database that have “APP” (“app”) in their name. If you enter “Example LLC”, then the API will give a response with all companies having “Example LLC” in the name, Example LLC Florida, Example LLC., Example LLC International, etc.
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/CIKCompanyName'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: CIK search results.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CIKSearchResponse'
+  /company_name:
+    get:
+      tags:
+      - EDGAR
+      summary: Find Company Name by CIK Code
+      description: Find Company Name by CIK code, which will provide a company name with a search by the CIK Code. The CIK code must be entered with all 10 digits, including leading zeros if any. Since the CIK code is a unique code for every company, we also have CIK code validation, meaning if the CIK code is not entered in the correct format with all of the digits, we return an error for invalid CIK format. This API endpoint returns data only in case we have an exact match in the CIK code.
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/CIKCode'
+      responses:
+        '200':
+          description: Company information retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyNameByCIKResponse'
+  /submissions:
+    get:
+      tags:
+      - EDGAR
+      summary: Company Submission Data
+      description: Returns submission details for a specific CIK. Pass atleast one parameter `cik_code_name` or  `cik_code`
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - name: cik_code
+        in: query
+        required: false
+        description: The exact 10-digit CIK code including leading zeros (e.g., `0001509697`).
+        schema:
+          type: string
+      - name: cik_code_name
+        in: query
+        required: false
+        description: The exact 10-digit CIK code including leading zeros ending with -submissions.json (e.g., `CIK0001509697-submissions.json`).
+        schema:
+          type: string
+      - name: report_from
+        in: query
+        required: false
+        description: Filter filings by report date from this date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      - name: report_to
+        in: query
+        required: false
+        description: Filter filings by report date to this date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      - name: filing_from
+        in: query
+        required: false
+        description: Filter filings by filing date from this date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      - name: filing_to
+        in: query
+        required: false
+        description: Filter filings by filing date to this date (YYYY-MM-DD).
+        schema:
+          type: string
+          format: date
+      - name: accession_number
+        in: query
+        required: false
+        description: Filter filings by exact accession number (e.g., `0001193125-20-209580`).
+        schema:
+          type: string
+      responses:
+        '200':
+          description: SEC submissions retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubmissionsByCIKResponse'
+  /company_facts:
+    get:
+      tags:
+      - EDGAR
+      summary: Company Facts
+      description: Returns all the company concepts data for a specific CIK.
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/CIKCode'
+      responses:
+        '200':
+          description: Company facts retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyFactsByCIKResponse'
+  /concept/accounts_payable:
+    get:
+      tags:
+      - EDGAR
+      summary: Company Concepts for US GAAP Accounts Payable
+      description: This API endpoint returns all the disclosures from a single company (CIK) and concept (a taxonomy and tag) into a single JSON file, with a separate array of facts for each units on measure that the company has chosen to disclose (e.g. net profits reported in U.S. dollars and in Canadian dollars).
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/CIKCode'
+      responses:
+        '200':
+          description: Accounts Payable data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountsPayableResponse'
+  /frames/accounts_payable/{unit}:
+    get:
+      tags:
+      - EDGAR
+      summary: Company Concepts for US GAAP Accounts Payable in a Specific Unit
+      description: "The frames API aggregates one fact for each reporting entity that is the last filed that most closely fits the calendrical period requested. This API supports annual, quarterly, and instantaneous data. This API endpoint is made for the US-GAAP taxonomy and the Accounts Payable Current type of the taxonomy.           \nWhere the units of measure specified in the API contain a numerator and a denominator, these are separated by “-per-” such as “USD-per-shares”. Note that the default unit in XBRL is “pure”.           \nThe period format is CY#### for annual data (duration 365 days +/- 30 days), CY####Q# for quarterly data (duration 91 days +/- 30 days), and CY####Q#I for instantaneous data. Because company financial calendars can start and end on any month or day and even change in length from quarter to quarter according to the day of the week, the frame data is assembled by the dates that best align with a calendar quarter or year. Data users should be mindful of the different reporting start and end dates for facts contained in a frame.\n"
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - name: frame
+        in: query
+        required: true
+        description: This is the information of the frame for which we want to receive information.
+        schema:
+          type: string
+      - name: unit
+        in: path
+        required: true
+        description: The unit in which the data is requested. This parameter usually is USD. Validate and sanitize parameter inputs to ensure API security and expected input values.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Accounts Payable data in the specified unit retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FrameResponse'
+components:
+  schemas:
+    CIKItem:
+      type: object
+      properties:
+        cik_code:
+          type: string
+          description: Company CIK code.
+        company_name:
+          type: string
+          description: Company name.
+        ein:
+          type: string
+          description: Employer Identification Number.
+        sic:
+          type: string
+          description: Standard Industrial Classification.
+        sic_description:
+          type: string
+          description: SIC description.
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+    SubmissionsByCIKResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            cik:
+              type: string
+              description: SEC Central Index Key.
+            entity_type:
+              type: string
+              description: Entity type (e.g. operating).
+            sic:
+              type: string
+              description: Standard Industrial Classification.
+            sic_description:
+              type: string
+              description: SIC description.
+            owner_org:
+              type: string
+              description: Owner organization.
+            insider_Transaction_For_Owner_Exists:
+              type: integer
+              description: Insider transaction for owner exists (1 or 0).
+            insider_Transaction_For_Issuer_Exists:
+              type: integer
+              description: Insider transaction for issuer exists (1 or 0).
+            name:
+              type: string
+              description: Company name.
+            tickers:
+              type: array
+              items:
+                type: string
+              description: List of ticker symbols.
+            exchanges:
+              type: array
+              items:
+                type: string
+              description: List of exchanges.
+            ein:
+              type: string
+              description: Employer Identification Number.
+            description:
+              type: string
+              description: Company description.
+            website:
+              type: string
+              description: Company website.
+            investor_Website:
+              type: string
+              description: Investor relations website.
+            category_filer:
+              type: string
+              description: Filer category.
+            fiscal_Year_End:
+              type: string
+              description: Fiscal year end (MMDD).
+            incorporation_state_or_country:
+              type: string
+              description: State or country of incorporation.
+            incorporation_state_or_country_desc:
+              type: string
+              description: Description of incorporation state or country.
+            addresses:
+              type: object
+              properties:
+                mailing:
+                  type: object
+                  properties:
+                    street1:
+                      type: string
+                      description: Mailing address line 1.
+                    street2:
+                      type: string
+                      description: Mailing address line 2.
+                    city:
+                      type: string
+                      description: Mailing city.
+                    state_or_country:
+                      type: string
+                      description: Mailing state or country.
+                    zip_Code:
+                      type: string
+                      description: Mailing postal code.
+                    state_or_country_desc:
+                      type: string
+                      description: Mailing state or country description.
+                business:
+                  type: object
+                  properties:
+                    street1:
+                      type: string
+                      description: Business address line 1.
+                    street2:
+                      type: string
+                      description: Business address line 2.
+                    city:
+                      type: string
+                      description: Business city.
+                    state_or_country:
+                      type: string
+                      description: Business state or country.
+                    zipCode:
+                      type: string
+                      description: Business postal code.
+                    state_or_country_desc:
+                      type: string
+                      description: Business state or country description.
+            phone:
+              type: string
+              description: Company phone number.
+            former_Names:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Former company name.
+                  from:
+                    type: string
+                    description: Start date of former name (ISO8601).
+                  to:
+                    type: string
+                    description: End date of former name (ISO8601).
+            filings:
+              type: object
+              properties:
+                recent:
+                  type: object
+                  properties:
+                    accession_Number:
+                      type: array
+                      items:
+                        type: string
+                      description: List of accession numbers.
+                    filing_Date:
+                      type: array
+                      items:
+                        type: string
+                      description: List of filing dates.
+                    report_Date:
+                      type: array
+                      items:
+                        type: string
+                      description: List of report dates.
+                    acceptance_Date_Time:
+                      type: array
+                      items:
+                        type: string
+                      description: List of acceptance date-times.
+                    act:
+                      type: array
+                      items:
+                        type: string
+                      description: List of acts.
+                    form:
+                      type: array
+                      items:
+                        type: string
+                      description: List of forms.
+                    file_Number:
+                      type: array
+                      items:
+                        type: string
+                      description: List of file numbers.
+                    film_Number:
+                      type: array
+                      items:
+                        type: string
+                      description: List of film numbers.
+                    core_type:
+                      type: array
+                      items:
+                        type: string
+                      description: List of core types.
+                    size:
+                      type: array
+                      items:
+                        type: integer
+                      description: List of filing sizes.
+                    primary_Document:
+                      type: array
+                      items:
+                        type: string
+                      description: List of primary document names.
+                    primary_Doc_Description:
+                      type: array
+                      items:
+                        type: string
+                      description: List of primary document descriptions.
+                files:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        description: File name.
+                      filing_Count:
+                        type: integer
+                        description: Number of filings in the file.
+                      filing_From:
+                        type: string
+                        description: Earliest filing date in the file.
+                      filing_To:
+                        type: string
+                        description: Latest filing date in the file.
+    CompanyFactsByCIKResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            cik:
+              type: integer
+              description: SEC Central Index Key.
+            company_name:
+              type: string
+              description: Company name.
+            facts:
+              type: object
+              additionalProperties:
+                type: object
+                additionalProperties:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                      description: Fact label.
+                    description:
+                      type: string
+                      description: Fact description.
+                    units:
+                      type: object
+                      additionalProperties:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            end:
+                              type: string
+                              description: End date (YYYY-MM-DD).
+                            val:
+                              type: number
+                              description: Value.
+                            accn:
+                              type: string
+                              description: Accession number.
+                            fy:
+                              type: integer
+                              description: Fiscal year.
+                            fp:
+                              type: string
+                              description: Fiscal period.
+                            form:
+                              type: string
+                              description: Filing form.
+                            filed:
+                              type: string
+                              description: Filing date (YYYY-MM-DD).
+                            frame:
+                              type: string
+                              description: Data frame.
+    FrameResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: object
+          properties:
+            taxonomy:
+              type: string
+              description: Taxonomy (e.g., us-gaap).
+            tag:
+              type: string
+              description: Tag name (e.g., AccountsPayableCurrent).
+            ccp:
+              type: string
+              description: Calendar period code (e.g., CY2023Q1I).
+            uom:
+              type: string
+              description: Unit of measure (e.g., USD).
+            label:
+              type: string
+              description: Concept label.
+            description:
+              type: string
+              description: Concept description.
+            frame_data:
+              type: array
+              items:
+                type: object
+                properties:
+                  accn:
+                    type: string
+                    description: Accession number.
+                  cik:
+                    type: integer
+                    description: SEC Central Index Key.
+                  entityName:
+                    type: string
+                    description: Entity name.
+                  end:
+                    type: string
+                    description: End date (YYYY-MM-DD).
+                  val:
+                    type: number
+                    description: Value.
+    CIKSearchResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CIKItem'
+    AccountsPayableResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            cik:
+              type: integer
+              description: SEC Central Index Key.
+            company_name:
+              type: string
+              description: Company name.
+            us-gaap:
+              type: object
+              properties:
+                AccountsPayableCurrent:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                      description: Concept label.
+                    description:
+                      type: string
+                      description: Concept description.
+                    units:
+                      type: object
+                      additionalProperties:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            fp:
+                              type: string
+                              description: Fiscal period.
+                            fy:
+                              type: integer
+                              description: Fiscal year.
+                            end:
+                              type: string
+                              description: End date (YYYY-MM-DD).
+                            val:
+                              type: number
+                              description: Value.
+                            accn:
+                              type: string
+                              description: Accession number.
+                            form:
+                              type: string
+                              description: Filing form.
+                            filed:
+                              type: string
+                              description: Filing date (YYYY-MM-DD).
+    CompanyNameByCIKResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              cik_code:
+                type: string
+                description: Company CIK code.
+              company_name:
+                type: string
+                description: Company name.
+              ein:
+                type: string
+                description: Employer Identification Number.
+              sic:
+                type: string
+                description: Standard Industrial Classification.
+              sic_description:
+                type: string
+                description: SIC description.
+              phone:
+                type: string
+                description: Company registered phone.
+              Incorporationstate:
+                type: string
+                description: Abbreviation of the incorporation state.
+        addresses:
+          type: object
+          properties:
+            mailing:
+              type: object
+              properties:
+                street1:
+                  type: string
+                  description: Mailing address line 1.
+                street2:
+                  type: string
+                  description: Mailing address line 2.
+                city:
+                  type: string
+                  description: Mailing city.
+                state_or_country:
+                  type: string
+                  description: Mailing state or country.
+                zipCode:
+                  type: string
+                  description: Mailing postal code.
+            business:
+              type: object
+              properties:
+                street1:
+                  type: string
+                  description: Business address line 1.
+                street2:
+                  type: string
+                  description: Business address line 2.
+                city:
+                  type: string
+                  description: Business city.
+                state_or_country:
+                  type: string
+                  description: Business state or country.
+                zipCode:
+                  type: string
+                  description: Business postal code.
+  parameters:
+    CIKCode:
+      name: cik_code
+      in: query
+      required: true
+      description: 10-digit SEC Central Index Key (with leading zeros).
+      schema:
+        type: string
+    CIKCompanyName:
+      name: company_name
+      in: query
+      required: true
+      description: Company name (min 3 letters) used to search CIK codes.
+      schema:
+        type: string
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: access_key
+      description: Your Marketstack API access key.

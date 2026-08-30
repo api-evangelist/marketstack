@@ -1,0 +1,159 @@
+openapi: 3.2.0
+info:
+  title: Marketstack API v2 Bonds API
+  version: 2.0.0
+  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
+
+
+    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
+
+    '
+servers:
+- url: https://api.marketstack.com/v2
+security:
+- ApiKeyQuery: []
+tags:
+- name: Bonds
+paths:
+  /bondlist:
+    get:
+      tags:
+      - Bonds
+      summary: Bonds Listing
+      description: The Bonds Listing endpoint delivers the list of the supported countries data. Return the full list of supported countries.
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: Bonds country list retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BondListResponse'
+  /bond:
+    get:
+      tags:
+      - Bonds
+      summary: Bond Info
+      description: The Bond endpoint delivers immediately real-time government bond data. The bond data focuses on treasury notes issued in leading countries worldwide for ten years. The Bond API delivers info for every country. Endpoint returns the details for the desired country.
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/CountryName'
+      responses:
+        '200':
+          description: Bond info retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BondInfoResponse'
+components:
+  parameters:
+    CountryName:
+      name: country
+      in: query
+      required: true
+      description: Country name for bonds endpoint (e.g., `kenya`, `united%20states`).
+      schema:
+        type: string
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+  schemas:
+    BondListItem:
+      type: object
+      properties:
+        country:
+          type: string
+          description: Country supported for bonds.
+    BondInfoItem:
+      type: object
+      properties:
+        region:
+          type: string
+          description: Region where the bond is supported.
+        country:
+          type: string
+          description: Country where the bond is supported.
+        type:
+          type: string
+          description: Bond tenor/type (for example 10Y).
+        yield:
+          type: string
+          description: Current bond yield.
+        price_change_day:
+          type: string
+          description: Price change day-over-day.
+        percentage_week:
+          type: string
+          description: Weekly change percentage.
+        percentage_month:
+          type: string
+          description: Monthly change percentage.
+        percentage_year:
+          type: string
+          description: Yearly change percentage.
+        date:
+          type: string
+          description: Quote date.
+    BondInfoResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BondInfoItem'
+    BondListResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/BondListItem'
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: access_key
+      description: Your Marketstack API access key.

@@ -1,0 +1,185 @@
+openapi: 3.2.0
+info:
+  title: Marketstack API v2 Company Ratings API
+  version: 2.0.0
+  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
+
+
+    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
+
+    '
+servers:
+- url: https://api.marketstack.com/v2
+security:
+- ApiKeyQuery: []
+tags:
+- name: Company Ratings
+paths:
+  /companyratings:
+    get:
+      tags:
+      - Company Ratings
+      summary: Company Ratings
+      description: 'The Company Rating Endpoint delivers real-time buy/sell/hold analyst ratings, updated as new reports are published. It also provides 15+ years of historical ratings and price targets to track trends and analyst performance over time.
+
+
+
+        **Note:** Rate limit is enforced to 1 API call per minute.'
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/Ticker'
+      - $ref: '#/components/parameters/DateFrom'
+      - $ref: '#/components/parameters/DateTo'
+      - $ref: '#/components/parameters/Rated'
+      responses:
+        '200':
+          description: Company ratings data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CompanyRatingsResponse'
+components:
+  parameters:
+    Rated:
+      name: rated
+      in: query
+      description: Filter response on buy, sell, or hold.
+      required: false
+      schema:
+        type: string
+        enum:
+        - buy
+        - sell
+        - hold
+    Ticker:
+      name: ticker
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+  schemas:
+    CompanyRatingsResponse:
+      type: object
+      properties:
+        status:
+          type: object
+          properties:
+            code:
+              type: integer
+              description: HTTP status code.
+            message:
+              type: string
+              description: Status message.
+            details:
+              type: string
+              description: Additional details.
+        result:
+          type: object
+          properties:
+            basics:
+              type: object
+              properties:
+                company_name:
+                  type: string
+                  description: Name of the company.
+                ticker:
+                  type: string
+                  description: Ticker symbol.
+            output:
+              type: object
+              properties:
+                analyst_consensus:
+                  type: object
+                  properties:
+                    consensus_conclusion:
+                      type: string
+                      description: Consensus conclusion.
+                    stock_price:
+                      type: string
+                      description: Current stock price.
+                    analyst_average:
+                      type: string
+                      description: Analyst average price target.
+                    analyst_highest:
+                      type: string
+                      description: Highest analyst price target.
+                    analyst_lowest:
+                      type: string
+                      description: Lowest analyst price target.
+                    analysts_number:
+                      type: string
+                      description: Number of analysts.
+                    buy:
+                      type: string
+                      description: Number of buy ratings.
+                    hold:
+                      type: string
+                      description: Number of hold ratings.
+                    sell:
+                      type: string
+                      description: Number of sell ratings.
+                    consensus_date:
+                      type: string
+                      description: Date of consensus (YYYY-MM-DD).
+                analysts:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      analyst_name:
+                        type: string
+                        description: Name of the analyst.
+                      analyst_firm:
+                        type: string
+                        description: Analyst's firm.
+                      analyst_role:
+                        type: string
+                        description: Role of the analyst.
+                      rating:
+                        type: object
+                        properties:
+                          date_rating:
+                            type: string
+                            description: Date of the rating (YYYY-MM-DD).
+                          target_date:
+                            type: string
+                            description: Target date for the rating (YYYY-MM-DD).
+                          price_target:
+                            type: string
+                            description: Analyst's price target.
+                          rated:
+                            type: string
+                            description: Analyst's rating (Buy/Sell/Hold).
+                          conclusion:
+                            type: string
+                            description: Analyst's conclusion (e.g.,
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: access_key
+      description: Your Marketstack API access key.

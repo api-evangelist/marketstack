@@ -1,0 +1,298 @@
+openapi: 3.2.0
+info:
+  title: Marketstack API v2 ET Fs API
+  version: 2.0.0
+  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
+
+
+    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
+
+    '
+servers:
+- url: https://api.marketstack.com/v2
+security:
+- ApiKeyQuery: []
+tags:
+- name: ETFs
+paths:
+  /etflist:
+    get:
+      tags:
+      - ETFs
+      summary: ETF Holdings Listing
+      description: 'The ETF Holdings Listing endpoint delivers instantly complete set of exchange-traded funds data based on the unique identifier code of an ETF data. The endpoint returns a full list of supported ETF tickers.
+
+
+
+        The example API request below demonstrates how to retrieve **ETF holdings data.**
+
+
+        **Note:** The ETF API endpoints apply a **call count multiplier of 20.**'
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/ETFListType'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: ETF tickers retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ETFListResponse'
+  /etfholdings:
+    get:
+      tags:
+      - ETFs
+      summary: ETF Holdings Info
+      description: 'ETF Holding Info (timeframe) holding data within a specified date range using a unique ticker identifier. You can adjust the `ticker`, `date_from`, and `date_to` parameters based on your specific needs.
+
+
+        The example API request below demonstrates how to retrieve **stock market index information.**
+
+
+        **Note:**The ETF API endpoints use a **call count multiplier of 20.**'
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/ETFTicker'
+      - $ref: '#/components/parameters/DateFrom'
+      - $ref: '#/components/parameters/DateTo'
+      responses:
+        '200':
+          description: ETF holdings retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ETFHoldingsResponse'
+components:
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+    ETFAttributes:
+      type: object
+      properties:
+        series_name:
+          type: string
+          description: Name of the ETF series held by the fund.
+        series_id:
+          type: string
+          description: ID of the ETF held by the fund.
+        series_lei:
+          type: string
+          description: Legal Entity Identifier of the ETF series.
+        ticker:
+          type: string
+          description: ETF ticker.
+        isin:
+          type: string
+          description: International Securities Identification Number.
+        date_report_period:
+          type: string
+          description: Start date of the report period.
+        end_report_period:
+          type: string
+          description: End date of the report period.
+        final_filing:
+          type: boolean
+          description: Indicates whether this is the final filing.
+    ETFHoldingSecurity:
+      type: object
+      properties:
+        lei:
+          type: string
+          description: Legal Entity Identifier.
+        isin:
+          type: string
+          description: International Securities Identification Number.
+        name:
+          type: string
+          description: Holding name.
+        cusip:
+          type: string
+          description: U.S./Canada security identifier (CUSIP).
+        title:
+          type: string
+          description: Holding title.
+        units:
+          type: string
+          description: Unit type.
+        balance:
+          type: string
+          description: Holding balance.
+        currency:
+          type: string
+          description: Currency code.
+        value_usd:
+          type: string
+          description: Holding value in USD.
+        loan_by_fund:
+          type: string
+          description: Whether the holding is loaned by the fund.
+        percent_value:
+          type: string
+          description: Portfolio percentage weight.
+        asset_category:
+          type: string
+          description: Asset category.
+        payoff_profile:
+          type: string
+          description: Payoff profile.
+        restricted_sec:
+          type: string
+          description: Restricted security flag.
+        cash_collateral:
+          type: string
+          description: Cash collateral flag.
+        issuer_category:
+          type: string
+          description: Issuer category.
+        fair_value_level:
+          type: string
+          description: Fair value level.
+        invested_country:
+          type: string
+          description: Invested country code.
+        non_cash_collateral:
+          type: string
+          description: Non-cash collateral flag.
+    ETFSignature:
+      type: object
+      properties:
+        date_signed:
+          type: string
+          description: Signature date.
+        name_of_applicant:
+          type: string
+          description: Name of the applicant.
+        signature:
+          type: string
+          description: Signature text.
+        signer_name:
+          type: string
+          description: Name of the signer.
+        title:
+          type: string
+          description: Signer's title.
+    ETFHoldingsResponse:
+      type: object
+      properties:
+        basics:
+          type: object
+          properties:
+            fund_name:
+              type: string
+              description: Fund name.
+            file_number:
+              type: string
+              description: SEC file number.
+            cik:
+              type: string
+              description: SEC CIK of the main trust fund.
+            reg_lei:
+              type: string
+              description: Legal Entity Identifier of the fund.
+        output:
+          type: object
+          properties:
+            attributes:
+              $ref: '#/components/schemas/ETFAttributes'
+            signature:
+              $ref: '#/components/schemas/ETFSignature'
+            holdings:
+              type: array
+              items:
+                type: object
+                properties:
+                  investment_security:
+                    $ref: '#/components/schemas/ETFHoldingSecurity'
+    ETFListItem:
+      type: object
+      properties:
+        ticker:
+          type: string
+          description: ETF ticker symbol.
+    ETFListResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ETFListItem'
+  parameters:
+    ETFTicker:
+      name: ticker
+      in: query
+      required: true
+      description: ETF ticker symbol.
+      schema:
+        type: string
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    ETFListType:
+      name: list
+      in: query
+      required: true
+      description: ETF list type; currently `ticker`.
+      schema:
+        type: string
+        enum:
+        - ticker
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: access_key
+      description: Your Marketstack API access key.

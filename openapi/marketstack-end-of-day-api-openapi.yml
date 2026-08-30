@@ -1,0 +1,284 @@
+openapi: 3.2.0
+info:
+  title: Marketstack API v2 End Of Day API
+  version: 2.0.0
+  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
+
+
+    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
+
+    '
+servers:
+- url: https://api.marketstack.com/v2
+security:
+- ApiKeyQuery: []
+tags:
+- name: End-of-day
+paths:
+  /eod:
+    get:
+      tags:
+      - End-of-day
+      summary: EOD Data
+      description: 'You can use the API''s `eod` endpoint in order to obtain end-of-day data for one or multiple stock tickers. A single or multiple comma-separated ticker symbols are passed to the API using the `symbols` parameter.
+
+
+
+        **Note:**
+
+
+        * *The EOD data has access to over 500,000 tickers from more major world-known exchanges. The full list of supported tickers and exchanges can be seen here:* [**Download**](https://marketstack.com/download/v2_eod_tickers_finnworlds_tiingo.xlsx)
+
+
+        * *A daily updated list of all tickers accessible via Marketstack is available for download:* [**Download Ticker List**](https://marketstack.com/download/supported_tickers_2.csv)
+
+
+        * *The V2 EOD endpoint supports data from **30+ stock exchanges**, including **NASDAQ,** **PINK, SHG, NYSE, NYSE ARCA, OTCQB,** and **BATS***
+
+
+        * *To retrieve end-of-day data for individual tickers, you can also use the Tickers Endpoint.*
+
+
+        * ***Ticker Symbol Formatting:** When querying ticker symbols that include a period (.), replace the period with a hyphen (-) in the intraday endpoint. **Example:BRK.B → BRK-B***
+
+        * *The **LSE’s/XLON** official currency is **GBP**, however many stocks can be and are quoted in **pence (GBX)** by convention. It improves readability and pricing precision. If **LSE** equity price looks “too big” → it’s probably **pence**. Convert using **GBP = GBX / 100***
+
+
+        **Adjusted Prices:**
+
+        “**Adjusted**” prices represent stock values that have been modified to accurately reflect the impact of corporate actions such as splits and dividends. These adjustments are applied following the CRSP Calculations methodology established by the **Center for Research in Security Prices (CRSP).**'
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/Symbols'
+      - $ref: '#/components/parameters/Exchange'
+      - $ref: '#/components/parameters/DateFrom'
+      - $ref: '#/components/parameters/DateTo'
+      - $ref: '#/components/parameters/Sort'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: EOD data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EODResponse'
+  /eod/latest:
+    get:
+      tags:
+      - End-of-day
+      summary: EOD Latest Data
+      description: Returns the most recent end-of-day data point for the requested symbols.
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/Symbols'
+      - $ref: '#/components/parameters/Exchange'
+      - $ref: '#/components/parameters/Sort'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      responses:
+        '200':
+          description: Latest EOD data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EODResponse'
+  /eod/{date}:
+    get:
+      tags:
+      - End-of-day
+      summary: EOD Data for a Specific Date
+      description: Specify a date in `YYYY-MM-DD` format. You can also specify an exact time in ISO-8601 date format. For example, `2020-05-21T00:00:00+0000`. Example, `/eod/2020-01-01`
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/DatePath'
+      - $ref: '#/components/parameters/Symbols'
+      - $ref: '#/components/parameters/Exchange'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/Sort'
+      responses:
+        '200':
+          description: EOD data for the date retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EODResponse'
+components:
+  schemas:
+    EODResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/EODBar'
+    EODBar:
+      type: object
+      description: End-of-day bar data for a single symbol and date.
+      properties:
+        open:
+          type: number
+          format: float
+          description: Opening price for the trading session.
+        high:
+          type: number
+          format: float
+          description: Highest price of the session.
+        low:
+          type: number
+          format: float
+          description: Lowest price of the session.
+        close:
+          type: number
+          format: float
+          description: Closing price of the session.
+        volume:
+          type: number
+          format: float
+          description: Traded volume during the session.
+        adj_high:
+          type: number
+          format: float
+          description: High price adjusted for corporate actions.
+        adj_low:
+          type: number
+          format: float
+          description: Low price adjusted for corporate actions.
+        adj_close:
+          type: number
+          format: float
+          description: Close price adjusted for corporate actions.
+        adj_open:
+          type: number
+          format: float
+          description: Open price adjusted for corporate actions.
+        adj_volume:
+          type: number
+          format: float
+          description: Volume adjusted for corporate actions.
+        split_factor:
+          type: number
+          format: float
+          description: Cumulative stock split factor applied for the date.
+        dividend:
+          type: number
+          format: float
+          description: Dividend amount per share for the date.
+        name:
+          type: string
+          description: Company name.
+        exchange_code:
+          type: string
+          description: Human-friendly exchange code (for example NASDAQ).
+        asset_type:
+          type: string
+          description: Asset class
+        price_currency:
+          type: string
+          description: Price currency (ISO code in lower case).
+        symbol:
+          type: string
+          description: Ticker symbol.
+        exchange:
+          type: string
+          description: MIC of the exchange.
+        date:
+          type: string
+          description: Timestamp of the bar in ISO8601 with timezone.
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+  parameters:
+    Symbols:
+      name: symbols
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
+    DatePath:
+      name: date
+      in: path
+      required: true
+      description: Specific date for EOD data. Format `YYYY-MM-DD`.
+      schema:
+        type: string
+        format: date
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
+    Sort:
+      name: sort
+      in: query
+      description: Sort order. Use `ASC` for oldest first or `DESC` for newest first.
+      required: false
+      schema:
+        type: string
+        enum:
+        - ASC
+        - DESC
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    Exchange:
+      name: exchange
+      in: query
+      description: Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange.
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: access_key
+      description: Your Marketstack API access key.

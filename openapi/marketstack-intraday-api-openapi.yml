@@ -1,0 +1,314 @@
+openapi: 3.2.0
+info:
+  title: Marketstack API v2 Intraday API
+  version: 2.0.0
+  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
+
+
+    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
+
+    '
+servers:
+- url: https://api.marketstack.com/v2
+security:
+- ApiKeyQuery: []
+tags:
+- name: Intraday
+paths:
+  /intraday:
+    get:
+      tags:
+      - Intraday
+      summary: Intraday Data
+      description: 'In additional to daily end-of-day stock prices, the Marketstack API also supports intraday data with data intervals as short as one minute. Intraday prices are available for all US stock tickers included in the IEX (Investors Exchange) stock exchange.
+
+
+        To access intraday market data, use the API’s Intraday Endpoint and specify your desired stock ticker symbols.
+
+
+        **Notes:**
+
+
+        * *A daily updated list of all tickers accessible via Marketstack is available for download:[**Download Ticker List**](https://marketstack.com/download/supported_tickers_2.csv)*
+
+
+        * *You can also request intraday data for **individual ticker symbols** using the **Tickers Endpoint.***
+
+
+        * ***Ticker Symbol Formatting:** When querying ticker symbols that include a period (.), replace the period with a hyphen (-) when using the Intraday Endpoint. **Example:** BRK.B → BRK-B*
+
+
+        **IMPORTANT NOTE:** In the case of Intraday, Marketstack provides derived data that calculates a real-time reference price for each asset. While this is not a substitute for the TOPS Feed, we believe it will fulfill the needs of 95% of our customer base.
+
+
+        We’re doing so because as of **February 1st, 2025**, the IEX Exchange has changed its market data policies. To receive the FULL TOPS Feed, you must now have a market data agreement signed with the IEX Exchange. This means that the parameters bidPrice, bidSize, askPrice, askSize, lastPrice, lastSize, mid, and last will all return NULL in the API response for intraday since **IEX entitlement is required** for them. If you still need to have access to TOPS Feed, please contact our customer support team before signing any contract with them.
+
+
+        For using our derived data, there is no need to have a market data agreement signed with the IEX exchange, and there is no additional cost to the IEX Exchange.`'
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/Symbols'
+      - $ref: '#/components/parameters/Interval'
+      - $ref: '#/components/parameters/Exchange'
+      - $ref: '#/components/parameters/DateFrom'
+      - $ref: '#/components/parameters/DateTo'
+      - $ref: '#/components/parameters/Sort'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/AfterHours'
+      responses:
+        '200':
+          description: Intraday data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntradayResponse'
+  /intraday/latest:
+    get:
+      tags:
+      - Intraday
+      summary: Intraday Latest Data
+      description: 'Returns the most recent intraday bar for the requested symbols.
+
+
+        **Real-Time Updates:** Please note that data frequency intervals below 15 minutes (15min) are only supported if you are subscribed to the Professional Plan or higher.
+
+
+        US equity markets close at **4:00 PM EST**, with trades at or after this time considered after-hours (retrievable with `after_hours=true`), though IEX after-hours data may be sparse, and note that intraday closing prices differ from official EOD closes, which are set via an auction process [Investopedia](https://www.investopedia.com/articles/investing/091113/auction-method-how-nyse-stock-prices-are-set.asp)'
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/Symbols'
+      - $ref: '#/components/parameters/Interval'
+      - $ref: '#/components/parameters/Exchange'
+      - $ref: '#/components/parameters/AfterHours'
+      responses:
+        '200':
+          description: Latest intraday data retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntradayResponse'
+  /intraday/{date}:
+    get:
+      tags:
+      - Intraday
+      summary: Intraday Data for a Specific Date
+      description: Specify a date in `YYYY-MM-DD` format. You can also specify an exact time in ISO-8601 date format. For example, `2020-05-21T00:00:00+0000`. Example, `/intraday/2020-01-01`
+      parameters:
+      - $ref: '#/components/parameters/AccessKey'
+      - $ref: '#/components/parameters/DateTimePath'
+      - $ref: '#/components/parameters/Symbols'
+      - $ref: '#/components/parameters/Interval'
+      - $ref: '#/components/parameters/Exchange'
+      - $ref: '#/components/parameters/Limit'
+      - $ref: '#/components/parameters/Offset'
+      - $ref: '#/components/parameters/AfterHours'
+      responses:
+        '200':
+          description: Intraday data for the date retrieved.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IntradayResponse'
+components:
+  schemas:
+    IntradayResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntradayBar'
+    EODBar:
+      type: object
+      description: End-of-day bar data for a single symbol and date.
+      properties:
+        open:
+          type: number
+          format: float
+          description: Opening price for the trading session.
+        high:
+          type: number
+          format: float
+          description: Highest price of the session.
+        low:
+          type: number
+          format: float
+          description: Lowest price of the session.
+        close:
+          type: number
+          format: float
+          description: Closing price of the session.
+        volume:
+          type: number
+          format: float
+          description: Traded volume during the session.
+        adj_high:
+          type: number
+          format: float
+          description: High price adjusted for corporate actions.
+        adj_low:
+          type: number
+          format: float
+          description: Low price adjusted for corporate actions.
+        adj_close:
+          type: number
+          format: float
+          description: Close price adjusted for corporate actions.
+        adj_open:
+          type: number
+          format: float
+          description: Open price adjusted for corporate actions.
+        adj_volume:
+          type: number
+          format: float
+          description: Volume adjusted for corporate actions.
+        split_factor:
+          type: number
+          format: float
+          description: Cumulative stock split factor applied for the date.
+        dividend:
+          type: number
+          format: float
+          description: Dividend amount per share for the date.
+        name:
+          type: string
+          description: Company name.
+        exchange_code:
+          type: string
+          description: Human-friendly exchange code (for example NASDAQ).
+        asset_type:
+          type: string
+          description: Asset class
+        price_currency:
+          type: string
+          description: Price currency (ISO code in lower case).
+        symbol:
+          type: string
+          description: Ticker symbol.
+        exchange:
+          type: string
+          description: MIC of the exchange.
+        date:
+          type: string
+          description: Timestamp of the bar in ISO8601 with timezone.
+    IntradayBar:
+      allOf:
+      - $ref: '#/components/schemas/EODBar'
+      description: Intraday bar data; fields identical to EOD with intraday timestamp.
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+  parameters:
+    DateTimePath:
+      name: date
+      in: path
+      required: true
+      description: Specific date for intraday data. Example `2024-09-27 15:30`.
+      schema:
+        type: string
+    Symbols:
+      name: symbols
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    AfterHours:
+      name: after_hours
+      in: query
+      description: If set to true, includes pre and post market data if available. By default is set to false.
+      required: false
+      schema:
+        type: boolean
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
+    Sort:
+      name: sort
+      in: query
+      description: Sort order. Use `ASC` for oldest first or `DESC` for newest first.
+      required: false
+      schema:
+        type: string
+        enum:
+        - ASC
+        - DESC
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    Interval:
+      name: interval
+      in: query
+      description: Intraday aggregation interval.
+      required: false
+      schema:
+        type: string
+        enum:
+        - 1min
+        - 5min
+        - 10min
+        - 15min
+        - 30min
+        - 1hour
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    Exchange:
+      name: exchange
+      in: query
+      description: Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange.
+      required: false
+      schema:
+        type: string
+  securitySchemes:
+    ApiKeyQuery:
+      type: apiKey
+      in: query
+      name: access_key
+      description: Your Marketstack API access key.
