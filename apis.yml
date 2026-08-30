@@ -107,6 +107,8 @@ apis:
   humanURL: https://marketstack.com
   baseURL: https://api.marketstack.com/v2
   tags:
+  - Currency
+  tags_raw:
   - Currencies
   properties:
   - type: OpenAPI
@@ -155,6 +157,8 @@ apis:
   humanURL: https://marketstack.com
   baseURL: https://api.marketstack.com/v2
   tags:
+  - End of Day
+  tags_raw:
   - End-of-day
   properties:
   - type: OpenAPI
@@ -235,6 +239,8 @@ apis:
   humanURL: https://marketstack.com
   baseURL: https://api.marketstack.com/v2
   tags:
+  - Split
+  tags_raw:
   - Splits
   properties:
   - type: OpenAPI
