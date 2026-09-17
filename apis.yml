@@ -169,22 +169,6 @@ apis:
     url: https://marketstack.com/documentation_v2
   - type: ToolCrosswalk
     url: mcp/marketstack-tool-crosswalk.yml
-- aid: marketstack:marketstack-etfs-api
-  name: Marketstack ET Fs API
-  description: The ETFs API from Marketstack — 2 operation(s) for etfs.
-  humanURL: https://marketstack.com
-  baseURL: https://api.marketstack.com/v2
-  tags:
-  - ETFs
-  properties:
-  - type: OpenAPI
-    url: openapi/marketstack-etfs-api-openapi.yml
-  - type: Documentation
-    url: https://docs.apilayer.com/marketstack/docs/api-documentation
-  - type: APIReference
-    url: https://marketstack.com/documentation_v2
-  - type: ToolCrosswalk
-    url: mcp/marketstack-tool-crosswalk.yml
 - aid: marketstack:marketstack-exchanges-api
   name: Marketstack Exchanges API
   description: The Exchanges API from Marketstack — 9 operation(s) for exchanges.
@@ -293,6 +277,22 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/marketstack-timezones-api-openapi.yml
+  - type: Documentation
+    url: https://docs.apilayer.com/marketstack/docs/api-documentation
+  - type: APIReference
+    url: https://marketstack.com/documentation_v2
+  - type: ToolCrosswalk
+    url: mcp/marketstack-tool-crosswalk.yml
+- aid: marketstack:marketstack-etfs-api
+  name: Marketstack ET Fs API
+  description: The ETFs API from Marketstack — 2 operation(s) for etfs.
+  humanURL: https://marketstack.com
+  baseURL: https://api.marketstack.com/v2
+  tags:
+  - ETFs
+  properties:
+  - type: OpenAPI
+    url: openapi/marketstack-etfs-api-openapi.yml
   - type: Documentation
     url: https://docs.apilayer.com/marketstack/docs/api-documentation
   - type: APIReference
