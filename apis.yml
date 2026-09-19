@@ -175,6 +175,8 @@ apis:
   humanURL: https://marketstack.com
   baseURL: https://api.marketstack.com/v2
   tags:
+  - Exchange
+  tags_raw:
   - Exchanges
   properties:
   - type: OpenAPI
@@ -191,6 +193,8 @@ apis:
   humanURL: https://marketstack.com
   baseURL: https://api.marketstack.com/v2
   tags:
+  - Index
+  tags_raw:
   - Indexes
   properties:
   - type: OpenAPI
@@ -273,6 +277,8 @@ apis:
   humanURL: https://marketstack.com
   baseURL: https://api.marketstack.com/v2
   tags:
+  - Timezone
+  tags_raw:
   - Timezones
   properties:
   - type: OpenAPI
