@@ -2,12 +2,7 @@ openapi: 3.2.0
 info:
   title: Marketstack API v2 Tickers API
   version: 2.0.0
-  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
-
-
-    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
-
-    '
+  description: The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints.
 servers:
 - url: https://api.marketstack.com/v2
 security:
@@ -39,6 +34,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TickerResponse'
+      operationId: getTickersBySymbol
+      x-operation-id-source: derived
   /tickers/{symbol}/eod:
     get:
       tags:
@@ -63,6 +60,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TickerEodResponse'
+      operationId: getTickersBySymbolEod
+      x-operation-id-source: derived
   /tickers/{symbol}/splits:
     get:
       tags:
@@ -90,6 +89,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TickerSplitsResponse'
+      operationId: getTickersBySymbolSplits
+      x-operation-id-source: derived
   /tickers/{symbol}/dividends:
     get:
       tags:
@@ -117,6 +118,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TickerDividendsResponse'
+      operationId: getTickersBySymbolDividends
+      x-operation-id-source: derived
   /tickers/{symbol}/intraday:
     get:
       tags:
@@ -146,6 +149,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TickerIntradayResponse'
+      operationId: getTickersBySymbolIntraday
+      x-operation-id-source: derived
   /tickers/{symbol}/eod/{date}:
     get:
       tags:
@@ -176,6 +181,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EODBar'
+      operationId: getTickersBySymbolEodByDate
+      x-operation-id-source: derived
   /tickers/{symbol}/eod/latest:
     get:
       tags:
@@ -200,6 +207,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/EODBar'
+      operationId: getTickersBySymbolEodLatest
+      x-operation-id-source: derived
   /tickers/{symbol}/intraday/latest:
     get:
       tags:
@@ -224,6 +233,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TickerIntradayLatestResponse'
+      operationId: getTickersBySymbolIntradayLatest
+      x-operation-id-source: derived
   /tickerslist:
     get:
       tags:
@@ -243,6 +254,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TickersListResponse'
+      operationId: getTickerslist
+      x-operation-id-source: derived
   /tickerinfo:
     get:
       tags:
@@ -259,16 +272,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/TickerInfoResponse'
+      operationId: getTickerinfo
+      x-operation-id-source: derived
 components:
   parameters:
-    Offset:
-      name: offset
+    AfterHours:
+      name: after_hours
       in: query
-      description: Pagination offset (number of results to skip). Default 0.
+      description: If set to true, includes pre and post market data if available. By default is set to false.
       required: false
       schema:
-        type: integer
-        minimum: 0
+        type: boolean
+    Ticker:
+      name: ticker
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
     DateTo:
       name: date_to
       in: query
@@ -277,58 +298,6 @@ components:
       schema:
         type: string
         format: date
-    Ticker:
-      name: ticker
-      in: query
-      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
-      required: true
-      schema:
-        type: string
-    Limit:
-      name: limit
-      in: query
-      description: Pagination limit (results per page). Default 100, maximum 1000.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-    DateFrom:
-      name: date_from
-      in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
-    Search:
-      name: search
-      in: query
-      description: Search term to filter tickers by name or symbol.
-      required: false
-      schema:
-        type: string
-    Interval:
-      name: interval
-      in: query
-      description: Intraday aggregation interval.
-      required: false
-      schema:
-        type: string
-        enum:
-        - 1min
-        - 5min
-        - 10min
-        - 15min
-        - 30min
-        - 1hour
-    AfterHours:
-      name: after_hours
-      in: query
-      description: If set to true, includes pre and post market data if available. By default is set to false.
-      required: false
-      schema:
-        type: boolean
     AccessKey:
       name: access_key
       in: query
@@ -346,6 +315,44 @@ components:
         enum:
         - ASC
         - DESC
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    Interval:
+      name: interval
+      in: query
+      description: Intraday aggregation interval.
+      required: false
+      schema:
+        type: string
+        enum:
+        - 1min
+        - 5min
+        - 10min
+        - 15min
+        - 30min
+        - 1hour
+    Search:
+      name: search
+      in: query
+      description: Search term to filter tickers by name or symbol.
+      required: false
+      schema:
+        type: string
     Exchange:
       name: exchange
       in: query
@@ -353,7 +360,308 @@ components:
       required: false
       schema:
         type: string
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
   schemas:
+    TickerIntradayResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Company or instrument name.
+            symbol:
+              type: string
+              description: Ticker symbol.
+            has_intraday:
+              type: boolean
+              description: Indicates if intraday data is available.
+            has_eod:
+              type: boolean
+              description: Indicates if end-of-day data is available.
+            country:
+              type: string
+              description: Country of the ticker.
+            intraday:
+              type: array
+              items:
+                type: object
+                properties:
+                  open:
+                    type: number
+                    format: float
+                    description: Opening price for the bar.
+                  high:
+                    type: number
+                    format: float
+                    description: Highest price for the bar.
+                  low:
+                    type: number
+                    format: float
+                    description: Lowest price for the bar.
+                  mid:
+                    type: number
+                    format: float
+                    description: Mid price for the bar.
+                  last_size:
+                    type: number
+                    format: float
+                    description: Last trade size.
+                  bid_size:
+                    type: number
+                    format: float
+                    description: Bid size.
+                  bid_price:
+                    type: number
+                    format: float
+                    description: Bid price.
+                  ask_price:
+                    type: number
+                    format: float
+                    description: Ask price.
+                  ask_size:
+                    type: number
+                    format: float
+                    description: Ask size.
+                  last:
+                    type: number
+                    format: float
+                    description: Last trade price.
+                  close:
+                    type: number
+                    format: float
+                    description: Closing price for the bar.
+                  volume:
+                    type: number
+                    format: float
+                    description: Traded volume during the bar.
+                  marketstack_last:
+                    type: number
+                    format: float
+                    description: Marketstack last price.
+                  date:
+                    type: string
+                    description: Timestamp of the bar in ISO8601 with timezone.
+                  symbol:
+                    type: string
+                    description: Ticker symbol.
+                  exchange:
+                    type: string
+                    description: Exchange code.
+    TickersListResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Company or instrument name.
+              ticker:
+                type: string
+                description: Ticker symbol.
+              has_intraday:
+                type: boolean
+                description: Indicates if intraday data is available.
+              has_eod:
+                type: boolean
+                description: Indicates if end-of-day data is available.
+              stock_exchange:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Exchange name.
+                  acronym:
+                    type: string
+                    description: Exchange acronym.
+                  mic:
+                    type: string
+                    description: MIC identification of the exchange.
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+    TickerResponse:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Company or instrument name.
+        symbol:
+          type: string
+          description: Ticker symbol.
+        cik:
+          type: string
+          description: SEC Central Index Key.
+        isin:
+          type: string
+          description: International Securities Identification Number.
+        cusip:
+          type: string
+          description: U.S./Canada security identifier (CUSIP).
+        ein_employer_id:
+          type: string
+          description: Employer Identification Number.
+        lei:
+          type: string
+          description: Legal Entity Identifier.
+        series_id:
+          type: string
+          description: Series ID.
+        item_type:
+          type: string
+          description: Type of item (e.g., equity).
+        sector:
+          type: string
+          description: Sector of the company.
+        industry:
+          type: string
+          description: Industry of the company.
+        sic_code:
+          type: string
+          description: Standard Industrial Classification code.
+        sic_name:
+          type: string
+          description: SIC description.
+        stock_exchange:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Exchange name.
+            acronym:
+              type: string
+              description: Exchange acronym.
+            mic:
+              type: string
+              description: MIC identification of the exchange.
+            country:
+              type:
+              - string
+              - 'null'
+              description: Exchange country.
+            country_code:
+              type: string
+              description: Three-letter country code.
+            city:
+              type: string
+              description: Exchange city.
+            website:
+              type: string
+              description: Exchange website URL.
+            operating_mic:
+              type: string
+              description: Operating Market Identifier Code.
+            oprt_sgmt:
+              type: string
+              description: Indicates operating MIC vs market segment MIC.
+            legal_entity_name:
+              type: string
+              description: Legal entity name.
+            exchange_lei:
+              type: string
+              description: Exchange Legal Entity Identifier (LEI).
+            market_category_code:
+              type: string
+              description: Market category code.
+            exchange_status:
+              type: string
+              description: Current status of the exchange.
+            date_creation:
+              type: object
+              properties:
+                date:
+                  type: string
+                  description: Creation date.
+                timezone_type:
+                  type: integer
+                  description: Timezone type.
+                timezone:
+                  type: string
+                  description: Timezone offset.
+            date_last_update:
+              type: object
+              properties:
+                date:
+                  type: string
+                  description: Last update date.
+                timezone_type:
+                  type: integer
+                  description: Timezone type.
+                timezone:
+                  type: string
+                  description: Timezone offset.
+            date_last_validation:
+              type: object
+              properties:
+                date:
+                  type: string
+                  description: Last validation date.
+                timezone_type:
+                  type: integer
+                  description: Timezone type.
+                timezone:
+                  type: string
+                  description: Timezone offset.
+            date_expiry:
+              type: string
+              description: Expiry date.
+            comments:
+              type: string
+              description: Additional comments.
+    TickerEodResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Company or instrument name.
+            symbol:
+              type: string
+              description: Ticker symbol.
+            has_intraday:
+              type: boolean
+              description: Indicates if intraday data is available.
+            has_eod:
+              type: boolean
+              description: Indicates if end-of-day data is available.
+            country:
+              type: string
+              description: Country of the ticker.
+            eod:
+              type: array
+              items:
+                $ref: '#/components/schemas/EODBar'
     TickerDividendsResponse:
       type: object
       properties:
@@ -386,28 +694,6 @@ components:
               symbol:
                 type: string
                 description: Ticker symbol the dividend
-    TickerSplitsResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              date:
-                type: string
-                description: Date of the split.
-              split_factor:
-                type: number
-                description: Split ratio applied on the date.
-              stock_split:
-                type: string
-                description: Additional stock split info (nullable).
-              symbol:
-                type: string
-                description: Ticker symbol the split
     EODBar:
       type: object
       description: End-of-day bar data for a single symbol and date.
@@ -481,6 +767,92 @@ components:
         date:
           type: string
           description: Timestamp of the bar in ISO8601 with timezone.
+    TickerIntradayLatestResponse:
+      type: object
+      properties:
+        open:
+          type: number
+          format: float
+          description: Opening price for the bar.
+        high:
+          type: number
+          format: float
+          description: Highest price for the bar.
+        low:
+          type: number
+          format: float
+          description: Lowest price for the bar.
+        mid:
+          type: number
+          format: float
+          description: Mid price for the bar.
+        last_size:
+          type: number
+          format: float
+          description: Last trade size.
+        bid_size:
+          type: number
+          format: float
+          description: Bid size.
+        bid_price:
+          type: number
+          format: float
+          description: Bid price.
+        ask_price:
+          type: number
+          format: float
+          description: Ask price.
+        ask_size:
+          type: number
+          format: float
+          description: Ask size.
+        last:
+          type: number
+          format: float
+          description: Last trade price.
+        close:
+          type: number
+          format: float
+          description: Closing price for the bar.
+        volume:
+          type: number
+          format: float
+          description: Traded volume during the bar.
+        marketstack_last:
+          type: number
+          format: float
+          description: Marketstack last price.
+        date:
+          type: string
+          description: Timestamp of the bar in ISO8601 with timezone.
+        symbol:
+          type: string
+          description: Ticker symbol.
+        exchange:
+          type: string
+          description: Exchange code.
+    TickerSplitsResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                description: Date of the split.
+              split_factor:
+                type: number
+                description: Split ratio applied on the date.
+              stock_split:
+                type: string
+                description: Additional stock split info (nullable).
+              symbol:
+                type: string
+                description: Ticker symbol the split
     TickerInfoResponse:
       type: object
       properties:
@@ -637,363 +1009,6 @@ components:
                   exchange_name:
                     type: string
                     description: Exchange name.
-    TickerResponse:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Company or instrument name.
-        symbol:
-          type: string
-          description: Ticker symbol.
-        cik:
-          type: string
-          description: SEC Central Index Key.
-        isin:
-          type: string
-          description: International Securities Identification Number.
-        cusip:
-          type: string
-          description: U.S./Canada security identifier (CUSIP).
-        ein_employer_id:
-          type: string
-          description: Employer Identification Number.
-        lei:
-          type: string
-          description: Legal Entity Identifier.
-        series_id:
-          type: string
-          description: Series ID.
-        item_type:
-          type: string
-          description: Type of item (e.g., equity).
-        sector:
-          type: string
-          description: Sector of the company.
-        industry:
-          type: string
-          description: Industry of the company.
-        sic_code:
-          type: string
-          description: Standard Industrial Classification code.
-        sic_name:
-          type: string
-          description: SIC description.
-        stock_exchange:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Exchange name.
-            acronym:
-              type: string
-              description: Exchange acronym.
-            mic:
-              type: string
-              description: MIC identification of the exchange.
-            country:
-              type:
-              - string
-              - 'null'
-              description: Exchange country.
-            country_code:
-              type: string
-              description: Three-letter country code.
-            city:
-              type: string
-              description: Exchange city.
-            website:
-              type: string
-              description: Exchange website URL.
-            operating_mic:
-              type: string
-              description: Operating Market Identifier Code.
-            oprt_sgmt:
-              type: string
-              description: Indicates operating MIC vs market segment MIC.
-            legal_entity_name:
-              type: string
-              description: Legal entity name.
-            exchange_lei:
-              type: string
-              description: Exchange Legal Entity Identifier (LEI).
-            market_category_code:
-              type: string
-              description: Market category code.
-            exchange_status:
-              type: string
-              description: Current status of the exchange.
-            date_creation:
-              type: object
-              properties:
-                date:
-                  type: string
-                  description: Creation date.
-                timezone_type:
-                  type: integer
-                  description: Timezone type.
-                timezone:
-                  type: string
-                  description: Timezone offset.
-            date_last_update:
-              type: object
-              properties:
-                date:
-                  type: string
-                  description: Last update date.
-                timezone_type:
-                  type: integer
-                  description: Timezone type.
-                timezone:
-                  type: string
-                  description: Timezone offset.
-            date_last_validation:
-              type: object
-              properties:
-                date:
-                  type: string
-                  description: Last validation date.
-                timezone_type:
-                  type: integer
-                  description: Timezone type.
-                timezone:
-                  type: string
-                  description: Timezone offset.
-            date_expiry:
-              type: string
-              description: Expiry date.
-            comments:
-              type: string
-              description: Additional comments.
-    TickerIntradayResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Company or instrument name.
-            symbol:
-              type: string
-              description: Ticker symbol.
-            has_intraday:
-              type: boolean
-              description: Indicates if intraday data is available.
-            has_eod:
-              type: boolean
-              description: Indicates if end-of-day data is available.
-            country:
-              type: string
-              description: Country of the ticker.
-            intraday:
-              type: array
-              items:
-                type: object
-                properties:
-                  open:
-                    type: number
-                    format: float
-                    description: Opening price for the bar.
-                  high:
-                    type: number
-                    format: float
-                    description: Highest price for the bar.
-                  low:
-                    type: number
-                    format: float
-                    description: Lowest price for the bar.
-                  mid:
-                    type: number
-                    format: float
-                    description: Mid price for the bar.
-                  last_size:
-                    type: number
-                    format: float
-                    description: Last trade size.
-                  bid_size:
-                    type: number
-                    format: float
-                    description: Bid size.
-                  bid_price:
-                    type: number
-                    format: float
-                    description: Bid price.
-                  ask_price:
-                    type: number
-                    format: float
-                    description: Ask price.
-                  ask_size:
-                    type: number
-                    format: float
-                    description: Ask size.
-                  last:
-                    type: number
-                    format: float
-                    description: Last trade price.
-                  close:
-                    type: number
-                    format: float
-                    description: Closing price for the bar.
-                  volume:
-                    type: number
-                    format: float
-                    description: Traded volume during the bar.
-                  marketstack_last:
-                    type: number
-                    format: float
-                    description: Marketstack last price.
-                  date:
-                    type: string
-                    description: Timestamp of the bar in ISO8601 with timezone.
-                  symbol:
-                    type: string
-                    description: Ticker symbol.
-                  exchange:
-                    type: string
-                    description: Exchange code.
-    TickersListResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: Company or instrument name.
-              ticker:
-                type: string
-                description: Ticker symbol.
-              has_intraday:
-                type: boolean
-                description: Indicates if intraday data is available.
-              has_eod:
-                type: boolean
-                description: Indicates if end-of-day data is available.
-              stock_exchange:
-                type: object
-                properties:
-                  name:
-                    type: string
-                    description: Exchange name.
-                  acronym:
-                    type: string
-                    description: Exchange acronym.
-                  mic:
-                    type: string
-                    description: MIC identification of the exchange.
-    TickerIntradayLatestResponse:
-      type: object
-      properties:
-        open:
-          type: number
-          format: float
-          description: Opening price for the bar.
-        high:
-          type: number
-          format: float
-          description: Highest price for the bar.
-        low:
-          type: number
-          format: float
-          description: Lowest price for the bar.
-        mid:
-          type: number
-          format: float
-          description: Mid price for the bar.
-        last_size:
-          type: number
-          format: float
-          description: Last trade size.
-        bid_size:
-          type: number
-          format: float
-          description: Bid size.
-        bid_price:
-          type: number
-          format: float
-          description: Bid price.
-        ask_price:
-          type: number
-          format: float
-          description: Ask price.
-        ask_size:
-          type: number
-          format: float
-          description: Ask size.
-        last:
-          type: number
-          format: float
-          description: Last trade price.
-        close:
-          type: number
-          format: float
-          description: Closing price for the bar.
-        volume:
-          type: number
-          format: float
-          description: Traded volume during the bar.
-        marketstack_last:
-          type: number
-          format: float
-          description: Marketstack last price.
-        date:
-          type: string
-          description: Timestamp of the bar in ISO8601 with timezone.
-        symbol:
-          type: string
-          description: Ticker symbol.
-        exchange:
-          type: string
-          description: Exchange code.
-    Pagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
-    TickerEodResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Company or instrument name.
-            symbol:
-              type: string
-              description: Ticker symbol.
-            has_intraday:
-              type: boolean
-              description: Indicates if intraday data is available.
-            has_eod:
-              type: boolean
-              description: Indicates if end-of-day data is available.
-            country:
-              type: string
-              description: Country of the ticker.
-            eod:
-              type: array
-              items:
-                $ref: '#/components/schemas/EODBar'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

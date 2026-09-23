@@ -2,12 +2,7 @@ openapi: 3.2.0
 info:
   title: Marketstack API v2 Company Ratings API
   version: 2.0.0
-  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
-
-
-    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
-
-    '
+  description: The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints.
 servers:
 - url: https://api.marketstack.com/v2
 security:
@@ -21,7 +16,6 @@ paths:
       - Company Ratings
       summary: Company Ratings
       description: 'The Company Rating Endpoint delivers real-time buy/sell/hold analyst ratings, updated as new reports are published. It also provides 15+ years of historical ratings and price targets to track trends and analyst performance over time.
-
 
 
         **Note:** Rate limit is enforced to 1 API call per minute.'
@@ -38,8 +32,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CompanyRatingsResponse'
+      operationId: getCompanyratings
+      x-operation-id-source: derived
 components:
   parameters:
+    Ticker:
+      name: ticker
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
     Rated:
       name: rated
       in: query
@@ -51,36 +77,6 @@ components:
         - buy
         - sell
         - hold
-    Ticker:
-      name: ticker
-      in: query
-      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
-      required: true
-      schema:
-        type: string
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
-    DateFrom:
-      name: date_from
-      in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
-    DateTo:
-      name: date_to
-      in: query
-      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
   schemas:
     CompanyRatingsResponse:
       type: object

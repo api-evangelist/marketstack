@@ -2,12 +2,7 @@ openapi: 3.2.0
 info:
   title: Marketstack API v2 Stock Prices API
   version: 2.0.0
-  description: 'The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints. Also, define multiple stock symbols, retrieve extensive data about 2700+ Stock Exchanges Info, 30000+ Stock tickers from more than 50 countries, as well as 750 + Stock Market indexes, information about timezones, currencies, and more.
-
-
-    Our API is built upon a RESTful and easy-to-understand request and response structure. API requests are always sent using a simple API request URL with a series of required and optional HTTPS GET parameters, and API responses are provided in lightweight JSON format.
-
-    '
+  description: The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints.
 servers:
 - url: https://api.marketstack.com/v2
 security:
@@ -42,6 +37,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StockPriceResponse'
+      operationId: getStockprice
+      x-operation-id-source: derived
 components:
   schemas:
     StockPriceResponse:

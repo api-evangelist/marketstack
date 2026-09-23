@@ -1,0 +1,51 @@
+{
+  "provider": "marketstack",
+  "sources": [
+    "_original/marketstack-v2-openapi.json"
+  ],
+  "outputs": [
+    "marketstack-bonds-api-openapi.yml",
+    "marketstack-commodities-api-openapi.yml",
+    "marketstack-company-ratings-api-openapi.yml",
+    "marketstack-currencies-api-openapi.yml",
+    "marketstack-dividends-api-openapi.yml",
+    "marketstack-edgar-api-openapi.yml",
+    "marketstack-etfs-api-openapi.yml",
+    "marketstack-end-of-day-api-openapi.yml",
+    "marketstack-exchanges-api-openapi.yml",
+    "marketstack-indexes-api-openapi.yml",
+    "marketstack-intraday-api-openapi.yml",
+    "marketstack-splits-api-openapi.yml",
+    "marketstack-stock-prices-api-openapi.yml",
+    "marketstack-tickers-api-openapi.yml",
+    "marketstack-timezones-api-openapi.yml"
+  ],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "marketstack-v2-openapi.json: upgraded openapi 3.0.3 -> OpenAPI 3.2.0",
+    "superseded outputs removed: marketstack-et-fs-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 15 total)"
+  ],
+  "skipped": [
+    "marketstack-bonds-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-commodities-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-company-ratings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-currencies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-dividends-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-edgar-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-end-of-day-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-et-fs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-exchanges-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-indexes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-intraday-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-splits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-stock-prices-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-tickers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "marketstack-timezones-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}
