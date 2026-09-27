@@ -30,7 +30,47 @@ paths:
       operationId: getCurrencies
       x-operation-id-source: derived
 components:
+  parameters:
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
   schemas:
+    Currency:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Three-letter currency code.
+        name:
+          type: string
+          description: Currency name.
+        symbol:
+          type: string
+          description: Currency symbol.
+        symbol_native:
+          type: string
+          description: Native currency symbol.
     Pagination:
       type: object
       properties:
@@ -55,46 +95,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Currency'
-    Currency:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Three-letter currency code.
-        name:
-          type: string
-          description: Currency name.
-        symbol:
-          type: string
-          description: Currency symbol.
-        symbol_native:
-          type: string
-          description: Native currency symbol.
-  parameters:
-    Offset:
-      name: offset
-      in: query
-      description: Pagination offset (number of results to skip). Default 0.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
-    Limit:
-      name: limit
-      in: query
-      description: Pagination limit (results per page). Default 100, maximum 1000.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Marketstack API v2 ET Fs API
+  title: Marketstack API v2 ETFs API
   version: 2.0.0
   description: The official Marketstack API documentation will help you learn how to query the Marketstack JSON API for real-time, intraday, and historical stock market data, along with more advanced EDGAR data endpoints.
 servers:
@@ -64,13 +64,6 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    ETFTicker:
-      name: ticker
-      in: query
-      required: true
-      description: ETF ticker symbol.
-      schema:
-        type: string
     ETFListType:
       name: list
       in: query
@@ -80,14 +73,6 @@ components:
         type: string
         enum:
         - ticker
-    DateTo:
-      name: date_to
-      in: query
-      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
     Offset:
       name: offset
       in: query
@@ -112,6 +97,14 @@ components:
       required: true
       schema:
         type: string
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
     DateFrom:
       name: date_from
       in: query
@@ -120,34 +113,29 @@ components:
       schema:
         type: string
         format: date
+    ETFTicker:
+      name: ticker
+      in: query
+      required: true
+      description: ETF ticker symbol.
+      schema:
+        type: string
   schemas:
-    ETFAttributes:
+    Pagination:
       type: object
       properties:
-        series_name:
-          type: string
-          description: Name of the ETF series held by the fund.
-        series_id:
-          type: string
-          description: ID of the ETF held by the fund.
-        series_lei:
-          type: string
-          description: Legal Entity Identifier of the ETF series.
-        ticker:
-          type: string
-          description: ETF ticker.
-        isin:
-          type: string
-          description: International Securities Identification Number.
-        date_report_period:
-          type: string
-          description: Start date of the report period.
-        end_report_period:
-          type: string
-          description: End date of the report period.
-        final_filing:
-          type: boolean
-          description: Indicates whether this is the final filing.
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
     ETFSignature:
       type: object
       properties:
@@ -226,36 +214,6 @@ components:
         non_cash_collateral:
           type: string
           description: Non-cash collateral flag.
-    ETFListResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ETFListItem'
-    ETFListItem:
-      type: object
-      properties:
-        ticker:
-          type: string
-          description: ETF ticker symbol.
-    Pagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
     ETFHoldingsResponse:
       type: object
       properties:
@@ -288,6 +246,48 @@ components:
                 properties:
                   investment_security:
                     $ref: '#/components/schemas/ETFHoldingSecurity'
+    ETFListResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ETFListItem'
+    ETFAttributes:
+      type: object
+      properties:
+        series_name:
+          type: string
+          description: Name of the ETF series held by the fund.
+        series_id:
+          type: string
+          description: ID of the ETF held by the fund.
+        series_lei:
+          type: string
+          description: Legal Entity Identifier of the ETF series.
+        ticker:
+          type: string
+          description: ETF ticker.
+        isin:
+          type: string
+          description: International Securities Identification Number.
+        date_report_period:
+          type: string
+          description: Start date of the report period.
+        end_report_period:
+          type: string
+          description: End date of the report period.
+        final_filing:
+          type: boolean
+          description: Indicates whether this is the final filing.
+    ETFListItem:
+      type: object
+      properties:
+        ticker:
+          type: string
+          description: ETF ticker symbol.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

@@ -204,6 +204,13 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
+    Exchange:
+      name: exchange
+      in: query
+      description: Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange.
+      required: false
+      schema:
+        type: string
     Symbols:
       name: symbols
       in: query
@@ -211,14 +218,6 @@ components:
       required: true
       schema:
         type: string
-    DateTo:
-      name: date_to
-      in: query
-      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
     AccessKey:
       name: access_key
       in: query
@@ -226,16 +225,21 @@ components:
       required: true
       schema:
         type: string
-    Sort:
-      name: sort
-      in: query
-      description: Sort order. Use `ASC` for oldest first or `DESC` for newest first.
-      required: false
+    DateTimePath:
+      name: date
+      in: path
+      required: true
+      description: Specific date for intraday data. Example `2024-09-27 15:30`.
       schema:
         type: string
-        enum:
-        - ASC
-        - DESC
+    DatePath:
+      name: date
+      in: path
+      required: true
+      description: Specific date for EOD data. Format `YYYY-MM-DD`.
+      schema:
+        type: string
+        format: date
     Limit:
       name: limit
       in: query
@@ -245,13 +249,14 @@ components:
         type: integer
         minimum: 1
         maximum: 1000
-    MIC:
-      name: mic
-      in: path
-      required: true
-      description: Exchange MIC identifier (e.g., `XNAS`).
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
       schema:
         type: string
+        format: date
     DateFrom:
       name: date_from
       in: query
@@ -274,35 +279,6 @@ components:
         - 15min
         - 30min
         - 1hour
-    Search:
-      name: search
-      in: query
-      description: Search term to filter tickers by name or symbol.
-      required: false
-      schema:
-        type: string
-    Exchange:
-      name: exchange
-      in: query
-      description: Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange.
-      required: false
-      schema:
-        type: string
-    DatePath:
-      name: date
-      in: path
-      required: true
-      description: Specific date for EOD data. Format `YYYY-MM-DD`.
-      schema:
-        type: string
-        format: date
-    DateTimePath:
-      name: date
-      in: path
-      required: true
-      description: Specific date for intraday data. Example `2024-09-27 15:30`.
-      schema:
-        type: string
     Offset:
       name: offset
       in: query
@@ -311,26 +287,31 @@ components:
       schema:
         type: integer
         minimum: 0
+    Search:
+      name: search
+      in: query
+      description: Search term to filter tickers by name or symbol.
+      required: false
+      schema:
+        type: string
+    MIC:
+      name: mic
+      in: path
+      required: true
+      description: Exchange MIC identifier (e.g., `XNAS`).
+      schema:
+        type: string
+    Sort:
+      name: sort
+      in: query
+      description: Sort order. Use `ASC` for oldest first or `DESC` for newest first.
+      required: false
+      schema:
+        type: string
+        enum:
+        - ASC
+        - DESC
   schemas:
-    IntradayBar:
-      allOf:
-      - $ref: '#/components/schemas/EODBar'
-      description: Intraday bar data; fields identical to EOD with intraday timestamp.
-    Pagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
     ExchangesResponse:
       type: object
       properties:
@@ -340,6 +321,88 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Exchange'
+    IntradayResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntradayBar'
+    EODBar:
+      type: object
+      description: End-of-day bar data for a single symbol and date.
+      properties:
+        open:
+          type: number
+          format: float
+          description: Opening price for the trading session.
+        high:
+          type: number
+          format: float
+          description: Highest price of the session.
+        low:
+          type: number
+          format: float
+          description: Lowest price of the session.
+        close:
+          type: number
+          format: float
+          description: Closing price of the session.
+        volume:
+          type: number
+          format: float
+          description: Traded volume during the session.
+        adj_high:
+          type: number
+          format: float
+          description: High price adjusted for corporate actions.
+        adj_low:
+          type: number
+          format: float
+          description: Low price adjusted for corporate actions.
+        adj_close:
+          type: number
+          format: float
+          description: Close price adjusted for corporate actions.
+        adj_open:
+          type: number
+          format: float
+          description: Open price adjusted for corporate actions.
+        adj_volume:
+          type: number
+          format: float
+          description: Volume adjusted for corporate actions.
+        split_factor:
+          type: number
+          format: float
+          description: Cumulative stock split factor applied for the date.
+        dividend:
+          type: number
+          format: float
+          description: Dividend amount per share for the date.
+        name:
+          type: string
+          description: Company name.
+        exchange_code:
+          type: string
+          description: Human-friendly exchange code (for example NASDAQ).
+        asset_type:
+          type: string
+          description: Asset class
+        price_currency:
+          type: string
+          description: Price currency (ISO code in lower case).
+        symbol:
+          type: string
+          description: Ticker symbol.
+        exchange:
+          type: string
+          description: MIC of the exchange.
+        date:
+          type: string
+          description: Timestamp of the bar in ISO8601 with timezone.
     Exchange:
       type: object
       properties:
@@ -399,6 +462,10 @@ components:
         comments:
           type: string
           description: Additional comments.
+    IntradayBar:
+      allOf:
+      - $ref: '#/components/schemas/EODBar'
+      description: Intraday bar data; fields identical to EOD with intraday timestamp.
     ExchangeMicTickersResponse:
       type: object
       properties:
@@ -475,88 +542,21 @@ components:
                   has_eod:
                     type: boolean
                     description: Indicates if end-of-day data is available.
-    EODBar:
-      type: object
-      description: End-of-day bar data for a single symbol and date.
-      properties:
-        open:
-          type: number
-          format: float
-          description: Opening price for the trading session.
-        high:
-          type: number
-          format: float
-          description: Highest price of the session.
-        low:
-          type: number
-          format: float
-          description: Lowest price of the session.
-        close:
-          type: number
-          format: float
-          description: Closing price of the session.
-        volume:
-          type: number
-          format: float
-          description: Traded volume during the session.
-        adj_high:
-          type: number
-          format: float
-          description: High price adjusted for corporate actions.
-        adj_low:
-          type: number
-          format: float
-          description: Low price adjusted for corporate actions.
-        adj_close:
-          type: number
-          format: float
-          description: Close price adjusted for corporate actions.
-        adj_open:
-          type: number
-          format: float
-          description: Open price adjusted for corporate actions.
-        adj_volume:
-          type: number
-          format: float
-          description: Volume adjusted for corporate actions.
-        split_factor:
-          type: number
-          format: float
-          description: Cumulative stock split factor applied for the date.
-        dividend:
-          type: number
-          format: float
-          description: Dividend amount per share for the date.
-        name:
-          type: string
-          description: Company name.
-        exchange_code:
-          type: string
-          description: Human-friendly exchange code (for example NASDAQ).
-        asset_type:
-          type: string
-          description: Asset class
-        price_currency:
-          type: string
-          description: Price currency (ISO code in lower case).
-        symbol:
-          type: string
-          description: Ticker symbol.
-        exchange:
-          type: string
-          description: MIC of the exchange.
-        date:
-          type: string
-          description: Timestamp of the bar in ISO8601 with timezone.
-    IntradayResponse:
+    Pagination:
       type: object
       properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntradayBar'
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
     ExchangesMicEod:
       type: object
       properties:

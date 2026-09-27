@@ -155,6 +155,13 @@ components:
                 format: date-time
                 description: Timestamp of the commodity price in ISO8601 format.
   parameters:
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
     DateTo:
       name: date_to
       in: query
@@ -163,28 +170,6 @@ components:
       schema:
         type: string
         format: date
-    CommodityName:
-      name: commodity_name
-      in: query
-      description: Specify the commodity_name for which you like to receive the Price, aluminum for example.
-      required: true
-      schema:
-        type: string
-    DateFrom:
-      name: date_from
-      in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
     Frequency:
       name: frequency
       in: query
@@ -198,6 +183,21 @@ components:
         - monthly
         - quarterly
         - yearly
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    CommodityName:
+      name: commodity_name
+      in: query
+      description: Specify the commodity_name for which you like to receive the Price, aluminum for example.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
