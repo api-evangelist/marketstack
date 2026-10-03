@@ -38,31 +38,14 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    Offset:
-      name: offset
+    DateFrom:
+      name: date_from
       in: query
-      description: Pagination offset (number of results to skip). Default 0.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-    Sort:
-      name: sort
-      in: query
-      description: Sort order. Use `ASC` for oldest first or `DESC` for newest first.
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
       required: false
       schema:
         type: string
-        enum:
-        - ASC
-        - DESC
-    Symbols:
-      name: symbols
-      in: query
-      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
-      required: true
-      schema:
-        type: string
+        format: date
     Limit:
       name: limit
       in: query
@@ -79,6 +62,21 @@ components:
       required: true
       schema:
         type: string
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Symbols:
+      name: symbols
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
     DateTo:
       name: date_to
       in: query
@@ -87,30 +85,17 @@ components:
       schema:
         type: string
         format: date
-    DateFrom:
-      name: date_from
+    Sort:
+      name: sort
       in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      description: Sort order. Use `ASC` for oldest first or `DESC` for newest first.
       required: false
       schema:
         type: string
-        format: date
+        enum:
+        - ASC
+        - DESC
   schemas:
-    Pagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
     SplitItem:
       type: object
       properties:
@@ -133,6 +118,21 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SplitItem'
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

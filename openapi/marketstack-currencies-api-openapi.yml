@@ -30,15 +30,47 @@ paths:
       operationId: getCurrencies
       x-operation-id-source: derived
 components:
+  schemas:
+    CurrenciesResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Currency'
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+    Currency:
+      type: object
+      properties:
+        code:
+          type: string
+          description: Three-letter currency code.
+        name:
+          type: string
+          description: Currency name.
+        symbol:
+          type: string
+          description: Currency symbol.
+        symbol_native:
+          type: string
+          description: Native currency symbol.
   parameters:
-    Offset:
-      name: offset
-      in: query
-      description: Pagination offset (number of results to skip). Default 0.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
     Limit:
       name: limit
       in: query
@@ -55,46 +87,14 @@ components:
       required: true
       schema:
         type: string
-  schemas:
-    Currency:
-      type: object
-      properties:
-        code:
-          type: string
-          description: Three-letter currency code.
-        name:
-          type: string
-          description: Currency name.
-        symbol:
-          type: string
-          description: Currency symbol.
-        symbol_native:
-          type: string
-          description: Native currency symbol.
-    Pagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
-    CurrenciesResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Currency'
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

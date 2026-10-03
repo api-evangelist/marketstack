@@ -41,13 +41,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    StockPriceResponse:
-      type: object
-      properties:
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/StockPriceItem'
     StockPriceItem:
       type: object
       properties:
@@ -72,6 +65,13 @@ components:
         trade_last:
           type: string
           description: Timestamp of the last known trade.
+    StockPriceResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StockPriceItem'
   parameters:
     AccessKey:
       name: access_key
