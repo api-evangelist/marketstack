@@ -41,6 +41,9 @@ x-source: public-apis/public-apis
 x-category: "Finance"
 x-tier: 3
 x-tier-reason: bulk-registered-from-public-apis
+x-docs-platform: stoplight
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
   - Finance
   - Stock Market
