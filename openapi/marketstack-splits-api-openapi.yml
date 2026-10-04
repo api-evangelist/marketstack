@@ -38,14 +38,21 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    DateFrom:
-      name: date_from
+    Offset:
+      name: offset
       in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      description: Pagination offset (number of results to skip). Default 0.
       required: false
       schema:
+        type: integer
+        minimum: 0
+    Symbols:
+      name: symbols
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
         type: string
-        format: date
     Limit:
       name: limit
       in: query
@@ -59,21 +66,6 @@ components:
       name: access_key
       in: query
       description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
-    Offset:
-      name: offset
-      in: query
-      description: Pagination offset (number of results to skip). Default 0.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-    Symbols:
-      name: symbols
-      in: query
-      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
       required: true
       schema:
         type: string
@@ -95,7 +87,30 @@ components:
         enum:
         - ASC
         - DESC
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
   schemas:
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
     SplitItem:
       type: object
       properties:
@@ -118,21 +133,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/SplitItem'
-    Pagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

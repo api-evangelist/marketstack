@@ -30,16 +30,32 @@ paths:
       operationId: getCurrencies
       x-operation-id-source: derived
 components:
+  parameters:
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
   schemas:
-    CurrenciesResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Currency'
     Pagination:
       type: object
       properties:
@@ -70,31 +86,15 @@ components:
         symbol_native:
           type: string
           description: Native currency symbol.
-  parameters:
-    Limit:
-      name: limit
-      in: query
-      description: Pagination limit (results per page). Default 100, maximum 1000.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
-    Offset:
-      name: offset
-      in: query
-      description: Pagination offset (number of results to skip). Default 0.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
+    CurrenciesResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Currency'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

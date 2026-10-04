@@ -37,69 +37,7 @@ paths:
       operationId: getDividends
       x-operation-id-source: derived
 components:
-  schemas:
-    DividendsResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/DividendItem'
-    DividendItem:
-      type: object
-      properties:
-        symbol:
-          type: string
-          description: Ticker symbol the dividend applies to.
-        date:
-          type: string
-          description: Ex-dividend date.
-        dividend:
-          type: number
-          format: float
-          description: Dividend amount per share.
-    Pagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
   parameters:
-    DateFrom:
-      name: date_from
-      in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
-    Limit:
-      name: limit
-      in: query
-      description: Pagination limit (results per page). Default 100, maximum 1000.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
     Offset:
       name: offset
       in: query
@@ -123,6 +61,22 @@ components:
       schema:
         type: string
         format: date
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
     Sort:
       name: sort
       in: query
@@ -133,6 +87,52 @@ components:
         enum:
         - ASC
         - DESC
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+  schemas:
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+    DividendsResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DividendItem'
+    DividendItem:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Ticker symbol the dividend applies to.
+        date:
+          type: string
+          description: Ex-dividend date.
+        dividend:
+          type: number
+          format: float
+          description: Dividend amount per share.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

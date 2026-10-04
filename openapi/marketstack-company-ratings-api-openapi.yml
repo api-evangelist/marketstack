@@ -47,13 +47,6 @@ components:
         - buy
         - sell
         - hold
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
     DateTo:
       name: date_to
       in: query
@@ -62,6 +55,13 @@ components:
       schema:
         type: string
         format: date
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
     Ticker:
       name: ticker
       in: query

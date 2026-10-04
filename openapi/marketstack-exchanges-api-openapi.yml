@@ -204,38 +204,13 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    DatePath:
-      name: date
-      in: path
-      required: true
-      description: Specific date for EOD data. Format `YYYY-MM-DD`.
-      schema:
-        type: string
-        format: date
-    DateTimePath:
-      name: date
-      in: path
-      required: true
-      description: Specific date for intraday data. Example `2024-09-27 15:30`.
-      schema:
-        type: string
-    Limit:
-      name: limit
+    Symbols:
+      name: symbols
       in: query
-      description: Pagination limit (results per page). Default 100, maximum 1000.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-    DateFrom:
-      name: date_from
-      in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
       schema:
         type: string
-        format: date
     AccessKey:
       name: access_key
       in: query
@@ -243,14 +218,20 @@ components:
       required: true
       schema:
         type: string
-    DateTo:
-      name: date_to
-      in: query
-      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
+    MIC:
+      name: mic
+      in: path
+      required: true
+      description: Exchange MIC identifier (e.g., `XNAS`).
       schema:
         type: string
-        format: date
+    DateTimePath:
+      name: date
+      in: path
+      required: true
+      description: Specific date for intraday data. Example `2024-09-27 15:30`.
+      schema:
+        type: string
     Sort:
       name: sort
       in: query
@@ -261,6 +242,52 @@ components:
         enum:
         - ASC
         - DESC
+    Interval:
+      name: interval
+      in: query
+      description: Intraday aggregation interval.
+      required: false
+      schema:
+        type: string
+        enum:
+        - 1min
+        - 5min
+        - 10min
+        - 15min
+        - 30min
+        - 1hour
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    DatePath:
+      name: date
+      in: path
+      required: true
+      description: Specific date for EOD data. Format `YYYY-MM-DD`.
+      schema:
+        type: string
+        format: date
+    Search:
+      name: search
+      in: query
+      description: Search term to filter tickers by name or symbol.
+      required: false
+      schema:
+        type: string
     Exchange:
       name: exchange
       in: query
@@ -276,46 +303,152 @@ components:
       schema:
         type: integer
         minimum: 0
-    MIC:
-      name: mic
-      in: path
-      required: true
-      description: Exchange MIC identifier (e.g., `XNAS`).
-      schema:
-        type: string
-    Interval:
-      name: interval
+    DateFrom:
+      name: date_from
       in: query
-      description: Intraday aggregation interval.
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
       required: false
       schema:
         type: string
-        enum:
-        - 1min
-        - 5min
-        - 10min
-        - 15min
-        - 30min
-        - 1hour
-    Symbols:
-      name: symbols
-      in: query
-      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
-      required: true
-      schema:
-        type: string
-    Search:
-      name: search
-      in: query
-      description: Search term to filter tickers by name or symbol.
-      required: false
-      schema:
-        type: string
+        format: date
   schemas:
-    IntradayBar:
-      allOf:
-      - $ref: '#/components/schemas/EODBar'
-      description: Intraday bar data; fields identical to EOD with intraday timestamp.
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+    Exchange:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the stock exchange.
+        acronym:
+          type: string
+          description: Acronym of the stock exchange.
+        mic:
+          type: string
+          description: MIC identification of the exchange.
+        country:
+          type:
+          - string
+          - 'null'
+          description: Country of the stock exchange.
+        country_code:
+          type: string
+          description: Three-letter country code of the exchange.
+        city:
+          type: string
+          description: City where the exchange is located.
+        website:
+          type: string
+          description: Website URL of the exchange.
+        operating_mic:
+          type: string
+          description: Operating Market Identifier Code.
+        oprt_sgmt:
+          type: string
+          description: Indicates operating MIC vs market segment MIC.
+        legal_entity_name:
+          type: string
+          description: Legal entity name.
+        exchange_lei:
+          type: string
+          description: Exchange Legal Entity Identifier (LEI).
+        market_category_code:
+          type: string
+          description: Market category code.
+        exchange_status:
+          type: string
+          description: Current status of the exchange.
+        date_creation:
+          type: string
+          description: Creation date.
+        date_last_update:
+          type: string
+          description: Last update date.
+        date_last_validation:
+          type: string
+          description: Last validation date.
+        date_expiry:
+          type: string
+          description: Expiry date.
+        comments:
+          type: string
+          description: Additional comments.
+    ExchangesMicEod:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Exchange name.
+            acronym:
+              type: string
+              description: Exchange acronym.
+            mic:
+              type: string
+              description: MIC identification of the exchange.
+            country:
+              type: string
+              description: Country of the exchange.
+            city:
+              type: string
+              description: Exchange city.
+            website:
+              type: string
+              description: Exchange website URL.
+            operating_mic:
+              type: string
+              description: Operating Market Identifier Code.
+            oprt_sgmt:
+              type: string
+              description: Indicates operating MIC vs market segment MIC.
+            legal_entity_name:
+              type: string
+              description: Legal entity name.
+            exchange_lei:
+              type: string
+              description: Exchange Legal Entity Identifier (LEI).
+            market_category_code:
+              type: string
+              description: Market category code.
+            exchange_status:
+              type: string
+              description: Current status of the exchange.
+            date_creation:
+              type: string
+              description: Creation date (YYYY-MM-DD).
+            date_last_update:
+              type: string
+              description: Last update date (YYYY-MM-DD).
+            date_last_validation:
+              type: string
+              description: Last validation date (nullable).
+            date_expiry:
+              type: string
+              description: Expiry date (nullable).
+            comments:
+              type: string
+              description: Additional comments.
+            eod:
+              type: array
+              items:
+                $ref: '#/components/schemas/EODBar'
     EODBar:
       type: object
       description: End-of-day bar data for a single symbol and date.
@@ -389,78 +522,10 @@ components:
         date:
           type: string
           description: Timestamp of the bar in ISO8601 with timezone.
-    ExchangesMicEod:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: object
-          properties:
-            name:
-              type: string
-              description: Exchange name.
-            acronym:
-              type: string
-              description: Exchange acronym.
-            mic:
-              type: string
-              description: MIC identification of the exchange.
-            country:
-              type: string
-              description: Country of the exchange.
-            city:
-              type: string
-              description: Exchange city.
-            website:
-              type: string
-              description: Exchange website URL.
-            operating_mic:
-              type: string
-              description: Operating Market Identifier Code.
-            oprt_sgmt:
-              type: string
-              description: Indicates operating MIC vs market segment MIC.
-            legal_entity_name:
-              type: string
-              description: Legal entity name.
-            exchange_lei:
-              type: string
-              description: Exchange Legal Entity Identifier (LEI).
-            market_category_code:
-              type: string
-              description: Market category code.
-            exchange_status:
-              type: string
-              description: Current status of the exchange.
-            date_creation:
-              type: string
-              description: Creation date (YYYY-MM-DD).
-            date_last_update:
-              type: string
-              description: Last update date (YYYY-MM-DD).
-            date_last_validation:
-              type: string
-              description: Last validation date (nullable).
-            date_expiry:
-              type: string
-              description: Expiry date (nullable).
-            comments:
-              type: string
-              description: Additional comments.
-            eod:
-              type: array
-              items:
-                $ref: '#/components/schemas/EODBar'
-    ExchangesResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Exchange'
+    IntradayBar:
+      allOf:
+      - $ref: '#/components/schemas/EODBar'
+      description: Intraday bar data; fields identical to EOD with intraday timestamp.
     IntradayResponse:
       type: object
       properties:
@@ -546,80 +611,15 @@ components:
                   has_eod:
                     type: boolean
                     description: Indicates if end-of-day data is available.
-    Pagination:
+    ExchangesResponse:
       type: object
       properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
-    Exchange:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the stock exchange.
-        acronym:
-          type: string
-          description: Acronym of the stock exchange.
-        mic:
-          type: string
-          description: MIC identification of the exchange.
-        country:
-          type:
-          - string
-          - 'null'
-          description: Country of the stock exchange.
-        country_code:
-          type: string
-          description: Three-letter country code of the exchange.
-        city:
-          type: string
-          description: City where the exchange is located.
-        website:
-          type: string
-          description: Website URL of the exchange.
-        operating_mic:
-          type: string
-          description: Operating Market Identifier Code.
-        oprt_sgmt:
-          type: string
-          description: Indicates operating MIC vs market segment MIC.
-        legal_entity_name:
-          type: string
-          description: Legal entity name.
-        exchange_lei:
-          type: string
-          description: Exchange Legal Entity Identifier (LEI).
-        market_category_code:
-          type: string
-          description: Market category code.
-        exchange_status:
-          type: string
-          description: Current status of the exchange.
-        date_creation:
-          type: string
-          description: Creation date.
-        date_last_update:
-          type: string
-          description: Last update date.
-        date_last_validation:
-          type: string
-          description: Last validation date.
-        date_expiry:
-          type: string
-          description: Expiry date.
-        comments:
-          type: string
-          description: Additional comments.
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Exchange'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
