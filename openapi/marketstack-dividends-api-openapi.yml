@@ -38,45 +38,6 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    Offset:
-      name: offset
-      in: query
-      description: Pagination offset (number of results to skip). Default 0.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-    Symbols:
-      name: symbols
-      in: query
-      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
-      required: true
-      schema:
-        type: string
-    DateTo:
-      name: date_to
-      in: query
-      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
-    Limit:
-      name: limit
-      in: query
-      description: Pagination limit (results per page). Default 100, maximum 1000.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
     Sort:
       name: sort
       in: query
@@ -95,7 +56,59 @@ components:
       schema:
         type: string
         format: date
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    Symbols:
+      name: symbols
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
   schemas:
+    DividendItem:
+      type: object
+      properties:
+        symbol:
+          type: string
+          description: Ticker symbol the dividend applies to.
+        date:
+          type: string
+          description: Ex-dividend date.
+        dividend:
+          type: number
+          format: float
+          description: Dividend amount per share.
     Pagination:
       type: object
       properties:
@@ -120,19 +133,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/DividendItem'
-    DividendItem:
-      type: object
-      properties:
-        symbol:
-          type: string
-          description: Ticker symbol the dividend applies to.
-        date:
-          type: string
-          description: Ex-dividend date.
-        dividend:
-          type: number
-          format: float
-          description: Dividend amount per share.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

@@ -56,6 +56,15 @@ components:
       schema:
         type: string
   schemas:
+    CurrenciesResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Currency'
     Pagination:
       type: object
       properties:
@@ -86,15 +95,6 @@ components:
         symbol_native:
           type: string
           description: Native currency symbol.
-    CurrenciesResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Currency'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

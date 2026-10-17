@@ -35,48 +35,6 @@ paths:
       operationId: getCompanyratings
       x-operation-id-source: derived
 components:
-  parameters:
-    Rated:
-      name: rated
-      in: query
-      description: Filter response on buy, sell, or hold.
-      required: false
-      schema:
-        type: string
-        enum:
-        - buy
-        - sell
-        - hold
-    DateTo:
-      name: date_to
-      in: query
-      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
-    Ticker:
-      name: ticker
-      in: query
-      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
-      required: true
-      schema:
-        type: string
-    DateFrom:
-      name: date_from
-      in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
   schemas:
     CompanyRatingsResponse:
       type: object
@@ -173,6 +131,48 @@ components:
                           conclusion:
                             type: string
                             description: Analyst's conclusion (e.g.,
+  parameters:
+    Ticker:
+      name: ticker
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    Rated:
+      name: rated
+      in: query
+      description: Filter response on buy, sell, or hold.
+      required: false
+      schema:
+        type: string
+        enum:
+        - buy
+        - sell
+        - hold
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

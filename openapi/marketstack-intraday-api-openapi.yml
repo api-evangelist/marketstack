@@ -113,13 +113,6 @@ paths:
       x-operation-id-source: derived
 components:
   parameters:
-    Exchange:
-      name: exchange
-      in: query
-      description: Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange.
-      required: false
-      schema:
-        type: string
     AfterHours:
       name: after_hours
       in: query
@@ -127,28 +120,6 @@ components:
       required: false
       schema:
         type: boolean
-    Offset:
-      name: offset
-      in: query
-      description: Pagination offset (number of results to skip). Default 0.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-    Interval:
-      name: interval
-      in: query
-      description: Intraday aggregation interval.
-      required: false
-      schema:
-        type: string
-        enum:
-        - 1min
-        - 5min
-        - 10min
-        - 15min
-        - 30min
-        - 1hour
     DateFrom:
       name: date_from
       in: query
@@ -157,13 +128,24 @@ components:
       schema:
         type: string
         format: date
-    Symbols:
-      name: symbols
+    Sort:
+      name: sort
       in: query
-      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
-      required: true
+      description: Sort order. Use `ASC` for oldest first or `DESC` for newest first.
+      required: false
       schema:
         type: string
+        enum:
+        - ASC
+        - DESC
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
     Limit:
       name: limit
       in: query
@@ -181,23 +163,34 @@ components:
       schema:
         type: string
         format: date
-    AccessKey:
-      name: access_key
+    Interval:
+      name: interval
       in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
-    Sort:
-      name: sort
-      in: query
-      description: Sort order. Use `ASC` for oldest first or `DESC` for newest first.
+      description: Intraday aggregation interval.
       required: false
       schema:
         type: string
         enum:
-        - ASC
-        - DESC
+        - 1min
+        - 5min
+        - 10min
+        - 15min
+        - 30min
+        - 1hour
+    Exchange:
+      name: exchange
+      in: query
+      description: Filter your results based on a specific stock exchange by specifying the MIC identification of a stock exchange.
+      required: false
+      schema:
+        type: string
+    Symbols:
+      name: symbols
+      in: query
+      description: One or more comma-separated ticker symbols (e.g., `AAPL,MSFT`).
+      required: true
+      schema:
+        type: string
     DateTimePath:
       name: date
       in: path
@@ -205,35 +198,14 @@ components:
       description: Specific date for intraday data. Example `2024-09-27 15:30`.
       schema:
         type: string
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
   schemas:
-    IntradayResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/IntradayBar'
-    Pagination:
-      type: object
-      properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
-    IntradayBar:
-      allOf:
-      - $ref: '#/components/schemas/EODBar'
-      description: Intraday bar data; fields identical to EOD with intraday timestamp.
     EODBar:
       type: object
       description: End-of-day bar data for a single symbol and date.
@@ -307,6 +279,34 @@ components:
         date:
           type: string
           description: Timestamp of the bar in ISO8601 with timezone.
+    IntradayResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/IntradayBar'
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
+    IntradayBar:
+      allOf:
+      - $ref: '#/components/schemas/EODBar'
+      description: Intraday bar data; fields identical to EOD with intraday timestamp.
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

@@ -63,79 +63,25 @@ paths:
       operationId: getEtfholdings
       x-operation-id-source: derived
 components:
-  parameters:
-    Offset:
-      name: offset
-      in: query
-      description: Pagination offset (number of results to skip). Default 0.
-      required: false
-      schema:
-        type: integer
-        minimum: 0
-    DateFrom:
-      name: date_from
-      in: query
-      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
-    ETFTicker:
-      name: ticker
-      in: query
-      required: true
-      description: ETF ticker symbol.
-      schema:
-        type: string
-    DateTo:
-      name: date_to
-      in: query
-      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
-      required: false
-      schema:
-        type: string
-        format: date
-    AccessKey:
-      name: access_key
-      in: query
-      description: Your Marketstack API access key.
-      required: true
-      schema:
-        type: string
-    Limit:
-      name: limit
-      in: query
-      description: Pagination limit (results per page). Default 100, maximum 1000.
-      required: false
-      schema:
-        type: integer
-        minimum: 1
-        maximum: 1000
-    ETFListType:
-      name: list
-      in: query
-      required: true
-      description: ETF list type; currently `ticker`.
-      schema:
-        type: string
-        enum:
-        - ticker
   schemas:
-    Pagination:
+    ETFSignature:
       type: object
       properties:
-        limit:
-          type: integer
-          description: Returns your pagination limit value.
-        offset:
-          type: integer
-          description: Returns your pagination offset value.
-        count:
-          type: integer
-          description: Returns the results count on the current page.
-        total:
-          type: integer
-          description: Returns the total count of results available.
+        date_signed:
+          type: string
+          description: Signature date.
+        name_of_applicant:
+          type: string
+          description: Name of the applicant.
+        signature:
+          type: string
+          description: Signature text.
+        signer_name:
+          type: string
+          description: Name of the signer.
+        title:
+          type: string
+          description: Signer's title.
     ETFHoldingSecurity:
       type: object
       properties:
@@ -196,56 +142,6 @@ components:
         non_cash_collateral:
           type: string
           description: Non-cash collateral flag.
-    ETFHoldingsResponse:
-      type: object
-      properties:
-        basics:
-          type: object
-          properties:
-            fund_name:
-              type: string
-              description: Fund name.
-            file_number:
-              type: string
-              description: SEC file number.
-            cik:
-              type: string
-              description: SEC CIK of the main trust fund.
-            reg_lei:
-              type: string
-              description: Legal Entity Identifier of the fund.
-        output:
-          type: object
-          properties:
-            attributes:
-              $ref: '#/components/schemas/ETFAttributes'
-            signature:
-              $ref: '#/components/schemas/ETFSignature'
-            holdings:
-              type: array
-              items:
-                type: object
-                properties:
-                  investment_security:
-                    $ref: '#/components/schemas/ETFHoldingSecurity'
-    ETFSignature:
-      type: object
-      properties:
-        date_signed:
-          type: string
-          description: Signature date.
-        name_of_applicant:
-          type: string
-          description: Name of the applicant.
-        signature:
-          type: string
-          description: Signature text.
-        signer_name:
-          type: string
-          description: Name of the signer.
-        title:
-          type: string
-          description: Signer's title.
     ETFListItem:
       type: object
       properties:
@@ -279,6 +175,21 @@ components:
         final_filing:
           type: boolean
           description: Indicates whether this is the final filing.
+    Pagination:
+      type: object
+      properties:
+        limit:
+          type: integer
+          description: Returns your pagination limit value.
+        offset:
+          type: integer
+          description: Returns your pagination offset value.
+        count:
+          type: integer
+          description: Returns the results count on the current page.
+        total:
+          type: integer
+          description: Returns the total count of results available.
     ETFListResponse:
       type: object
       properties:
@@ -288,6 +199,95 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ETFListItem'
+    ETFHoldingsResponse:
+      type: object
+      properties:
+        basics:
+          type: object
+          properties:
+            fund_name:
+              type: string
+              description: Fund name.
+            file_number:
+              type: string
+              description: SEC file number.
+            cik:
+              type: string
+              description: SEC CIK of the main trust fund.
+            reg_lei:
+              type: string
+              description: Legal Entity Identifier of the fund.
+        output:
+          type: object
+          properties:
+            attributes:
+              $ref: '#/components/schemas/ETFAttributes'
+            signature:
+              $ref: '#/components/schemas/ETFSignature'
+            holdings:
+              type: array
+              items:
+                type: object
+                properties:
+                  investment_security:
+                    $ref: '#/components/schemas/ETFHoldingSecurity'
+  parameters:
+    DateFrom:
+      name: date_from
+      in: query
+      description: Filter results from this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    ETFListType:
+      name: list
+      in: query
+      required: true
+      description: ETF list type; currently `ticker`.
+      schema:
+        type: string
+        enum:
+        - ticker
+    Offset:
+      name: offset
+      in: query
+      description: Pagination offset (number of results to skip). Default 0.
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    ETFTicker:
+      name: ticker
+      in: query
+      required: true
+      description: ETF ticker symbol.
+      schema:
+        type: string
+    DateTo:
+      name: date_to
+      in: query
+      description: Filter results up to this date (inclusive). Format `YYYY-MM-DD`.
+      required: false
+      schema:
+        type: string
+        format: date
+    Limit:
+      name: limit
+      in: query
+      description: Pagination limit (results per page). Default 100, maximum 1000.
+      required: false
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 1000
+    AccessKey:
+      name: access_key
+      in: query
+      description: Your Marketstack API access key.
+      required: true
+      schema:
+        type: string
   securitySchemes:
     ApiKeyQuery:
       type: apiKey

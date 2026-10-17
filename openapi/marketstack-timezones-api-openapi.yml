@@ -56,6 +56,27 @@ components:
       schema:
         type: string
   schemas:
+    TimezonesResponse:
+      type: object
+      properties:
+        pagination:
+          $ref: '#/components/schemas/Pagination'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Timezone'
+    Timezone:
+      type: object
+      properties:
+        timezone:
+          type: string
+          description: IANA timezone name.
+        abbr:
+          type: string
+          description: Standard time abbreviation.
+        abbr_dst:
+          type: string
+          description: Daylight saving time abbreviation.
     Pagination:
       type: object
       properties:
@@ -71,27 +92,6 @@ components:
         total:
           type: integer
           description: Returns the total count of results available.
-    Timezone:
-      type: object
-      properties:
-        timezone:
-          type: string
-          description: IANA timezone name.
-        abbr:
-          type: string
-          description: Standard time abbreviation.
-        abbr_dst:
-          type: string
-          description: Daylight saving time abbreviation.
-    TimezonesResponse:
-      type: object
-      properties:
-        pagination:
-          $ref: '#/components/schemas/Pagination'
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/Timezone'
   securitySchemes:
     ApiKeyQuery:
       type: apiKey
