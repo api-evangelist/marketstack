@@ -1,4 +1,4 @@
-# Marketstack (marketstack)
+# Marketstack
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,28 +64,140 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Real-Time, Intraday & Historical Market Data API
+Marketstack is a real-time, intraday, and historical stock market data API from APILayer, delivering JSON data for tickers across 70+ global stock exchanges. The REST API covers end-of-day and intraday prices, real-time stock prices, splits, dividends, commodities, company ratings, market indexes, bonds, ETF holdings, currencies, timezones, and SEC EDGAR company filings and facts, all authenticated with a simple access_key query parameter.
 
-**APIs.yml:** [apis.yml](apis.yml)
+**Areas:** Finance · Stock Market · Market Data · End of Day · Intraday Data · Commodities · Bonds · ETFs · SEC EDGAR · Dividends
 
-## Type
-- **x-type:** company
-- **x-tier:** 3 (bulk-registered from public-apis)
-- **source:** [public-apis/public-apis](https://github.com/public-apis/public-apis) — category: Finance
+## Marketstack on APIs.io
 
-## API
-- **Marketstack** — [Documentation](https://marketstack.com/?utm_source=Github&utm_medium=Referral&utm_campaign=Public-apis-repo-Best-sellers)
+Everything profiled for Marketstack is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/marketstack/](https://apis.io/providers/marketstack/)** — or go straight to one of the APIs or properties below.
 
-## Tags
-Finance, Public APIs
+### APIs (15)
 
-## Notes
-This entry was bulk-registered as part of a public-apis catalog sweep on 2026-05-28.
-A real OpenAPI artifact will be added during a follow-up enrichment pass if the provider publishes one.
+- [Marketstack Bonds API](https://apis.io/apis/marketstack/marketstack-bonds-api/) — The Bonds API from Marketstack — 2 operation(s) for bonds.
+- [Marketstack Commodities API](https://apis.io/apis/marketstack/marketstack-commodities-api/) — The Commodities API from Marketstack — 2 operation(s) for commodities.
+- [Marketstack Company Ratings API](https://apis.io/apis/marketstack/marketstack-company-ratings-api/) — The Company Ratings API from Marketstack — 1 operation(s) for company ratings.
+- [Marketstack Currencies API](https://apis.io/apis/marketstack/marketstack-currencies-api/) — The Currencies API from Marketstack — 1 operation(s) for currencies.
+- [Marketstack Dividends API](https://apis.io/apis/marketstack/marketstack-dividends-api/) — The Dividends API from Marketstack — 1 operation(s) for dividends.
+- [Marketstack EDGAR API](https://apis.io/apis/marketstack/marketstack-edgar-api/) — The EDGAR API from Marketstack — 6 operation(s) for edgar.
+- [Marketstack End Of Day API](https://apis.io/apis/marketstack/marketstack-end-of-day-api/) — The End-of-day API from Marketstack — 3 operation(s) for end-of-day.
+- [Marketstack Exchanges API](https://apis.io/apis/marketstack/marketstack-exchanges-api/) — The Exchanges API from Marketstack — 9 operation(s) for exchanges.
+- [Marketstack Indexes API](https://apis.io/apis/marketstack/marketstack-indexes-api/) — The Indexes API from Marketstack — 2 operation(s) for indexes.
+- [Marketstack Intraday API](https://apis.io/apis/marketstack/marketstack-intraday-api/) — The Intraday API from Marketstack — 3 operation(s) for intraday.
+- [Marketstack Splits API](https://apis.io/apis/marketstack/marketstack-splits-api/) — The Splits API from Marketstack — 1 operation(s) for splits.
+- [Marketstack Stock Prices API](https://apis.io/apis/marketstack/marketstack-stock-prices-api/) — The Stock Prices API from Marketstack — 1 operation(s) for stock prices.
+- [Marketstack Tickers API](https://apis.io/apis/marketstack/marketstack-tickers-api/) — The Tickers API from Marketstack — 10 operation(s) for tickers.
+- [Marketstack Timezones API](https://apis.io/apis/marketstack/marketstack-timezones-api/) — The Timezones API from Marketstack — 1 operation(s) for timezones.
+- [Marketstack ET Fs API](https://apis.io/apis/marketstack/marketstack-etfs-api/) — The ETFs API from Marketstack — 2 operation(s) for etfs.
 
-## Timestamps
-- **Created:** 2026-05-28
-- **Modified:** 2026-05-28
+### Published properties
 
-## Maintainers
-- **Kin Lane** — kin@apievangelist.com
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [marketstack (community)](https://apis.io/servers/marketstack/marketstack-community/)
+
+#### Collections (1)
+
+Postman and Open Collection request collections.
+
+- [Marketstack API v2](https://apis.io/collections/marketstack/open-marketstack-v2/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Marketstack V2 Overlay](https://apis.io/overlays/marketstack/marketstack-v2-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Marketstack Authentication](https://apis.io/security/marketstack/marketstack-authentication/)
+- [Marketstack Domain Security](https://apis.io/security/marketstack/marketstack-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Marketstack Plans](https://apis.io/plans/marketstack/marketstack-plans/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Marketstack Rate Limits](https://apis.io/rate-limits/marketstack/marketstack-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://marketstack.com)
+- [Documentation](https://docs.apilayer.com/marketstack/docs/api-documentation)
+- [Getting started](https://marketstack.com/quickstart)
+- [API reference](https://marketstack.com/documentation_v2)
+- [Pricing](https://marketstack.com/pricing)
+- [Sign up](https://marketstack.com/signup/free)
+- [Support](https://marketstack.com/contact)
+- [Blog](https://blog.apilayer.com/feed/)
+- [Terms of service](https://marketstack.com/terms)
+- [Privacy policy](https://marketstack.com/privacy)
+- [Status](https://status.marketstack.com)
+
+## API Evangelist rating
+
+**Kin Score 53.4** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 44.2 |
+| Contract governance | 4.5 |
+| Operational transparency | 47.4 |
+| Developer ergonomics | 60.1 |
+| Access clarity | 76.3 |
+
+**Agent readiness 30.3** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | na |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 28.7** — Securities & Market Data
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/marketstack/](https://apis.io/providers/marketstack/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Marketstack: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/marketstack/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
